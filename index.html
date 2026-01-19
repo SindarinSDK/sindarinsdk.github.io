@@ -1152,7 +1152,7 @@ numbers[<span class="number">0</span>] = <span class="number">99</span>         
         <section id="sdk">
             <h2>SDK Overview</h2>
 
-            <p>The Sindarin SDK provides modules for common programming tasks:</p>
+            <p>The Sindarin SDK provides modules for common programming tasks. All SDK types integrate with arena-based memory management and threading.</p>
 
             <table>
                 <tr>
@@ -1163,109 +1163,268 @@ numbers[<span class="number">0</span>] = <span class="number">99</span>         
                 <tr><td>Date</td><td><code>import "sdk/date"</code></td><td>Calendar date operations</td></tr>
                 <tr><td>Time</td><td><code>import "sdk/time"</code></td><td>Time and duration operations</td></tr>
                 <tr><td>Environment</td><td><code>import "sdk/env"</code></td><td>Environment variable access</td></tr>
-                <tr><td>Process</td><td><code>import "sdk/process"</code></td><td>Process execution</td></tr>
-                <tr><td>Random</td><td><code>import "sdk/random"</code></td><td>Random number generation</td></tr>
-                <tr><td>UUID</td><td><code>import "sdk/uuid"</code></td><td>UUID generation</td></tr>
+                <tr><td>Process</td><td><code>import "sdk/process"</code></td><td>Process execution and output capture</td></tr>
+                <tr><td>Random</td><td><code>import "sdk/random"</code></td><td>Secure random number generation</td></tr>
+                <tr><td>UUID</td><td><code>import "sdk/uuid"</code></td><td>UUID v4, v5, v7 generation</td></tr>
                 <tr><td>TextFile</td><td><code>import "sdk/io/textfile"</code></td><td>Text file operations</td></tr>
                 <tr><td>BinaryFile</td><td><code>import "sdk/io/binaryfile"</code></td><td>Binary file operations</td></tr>
-                <tr><td>Path</td><td><code>import "sdk/io/path"</code></td><td>Path manipulation</td></tr>
+                <tr><td>Bytes</td><td><code>import "sdk/io/bytes"</code></td><td>Byte encoding (hex, base64)</td></tr>
+                <tr><td>Path</td><td><code>import "sdk/io/path"</code></td><td>Path manipulation utilities</td></tr>
                 <tr><td>Directory</td><td><code>import "sdk/io/directory"</code></td><td>Directory operations</td></tr>
-                <tr><td>TCP</td><td><code>import "sdk/net/tcp"</code></td><td>TCP networking</td></tr>
-                <tr><td>UDP</td><td><code>import "sdk/net/udp"</code></td><td>UDP networking</td></tr>
+                <tr><td>TcpListener</td><td><code>import "sdk/net/tcp"</code></td><td>TCP server socket</td></tr>
+                <tr><td>TcpStream</td><td><code>import "sdk/net/tcp"</code></td><td>TCP connection</td></tr>
+                <tr><td>UdpSocket</td><td><code>import "sdk/net/udp"</code></td><td>UDP socket</td></tr>
             </table>
 
-            <h3>Quick Example</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/date"</span>
-<span class="keyword">import</span> <span class="string">"sdk/time"</span>
-<span class="keyword">import</span> <span class="string">"sdk/random"</span>
-<span class="keyword">import</span> <span class="string">"sdk/uuid"</span>
-<span class="keyword">import</span> <span class="string">"sdk/io/textfile"</span>
-
-<span class="keyword">fn</span> <span class="function">main</span>(): <span class="type">int</span> =>
-  <span class="keyword">var</span> today: <span class="type">Date</span> = Date.<span class="function">today</span>()
-  <span class="keyword">var</span> now: <span class="type">Time</span> = Time.<span class="function">now</span>()
-  <span class="keyword">var</span> dice: <span class="type">int</span> = Random.<span class="function">int</span>(<span class="number">1</span>, <span class="number">6</span>)
-  <span class="keyword">var</span> id: <span class="type">UUID</span> = UUID.<span class="function">create</span>()
-
-  <span class="function">print</span>(<span class="string">$"Today: {today.toIso()}\n"</span>)
-  <span class="function">print</span>(<span class="string">$"Dice: {dice}\n"</span>)
-  <span class="function">print</span>(<span class="string">$"ID: {id}\n"</span>)
-
-  <span class="keyword">return</span> <span class="number">0</span></code></pre>
+            <h3>Design Principles</h3>
+            <ul>
+                <li><strong>Static + Instance methods</strong>: Types provide both static factory methods and instance methods</li>
+                <li><strong>Panic on errors</strong>: Operations panic rather than returning null (check existence first)</li>
+                <li><strong>Arena integration</strong>: Resources auto-close when their arena is destroyed</li>
+                <li><strong>Thread-safe</strong>: Works naturally with <code>&amp;</code> spawn and <code>!</code> sync</li>
+            </ul>
         </section>
 
         <!-- SDK I/O Section -->
         <section id="sdk-io">
             <h2>File I/O</h2>
 
-            <h3>Text Files</h3>
+            <h3>TextFile</h3>
+            <p><code>import "sdk/io/textfile"</code></p>
+
+            <h4>Static Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>TextFile.readAll(path)</code></td><td><code>str</code></td><td>Read entire file as string</td></tr>
+                <tr><td><code>TextFile.writeAll(path, content)</code></td><td><code>void</code></td><td>Write string to file (creates/overwrites)</td></tr>
+                <tr><td><code>TextFile.exists(path)</code></td><td><code>bool</code></td><td>Check if file exists</td></tr>
+                <tr><td><code>TextFile.copy(src, dest)</code></td><td><code>void</code></td><td>Copy file</td></tr>
+                <tr><td><code>TextFile.move(src, dest)</code></td><td><code>void</code></td><td>Move/rename file</td></tr>
+                <tr><td><code>TextFile.delete(path)</code></td><td><code>void</code></td><td>Delete file</td></tr>
+                <tr><td><code>TextFile.open(path)</code></td><td><code>TextFile</code></td><td>Open file handle for streaming</td></tr>
+            </table>
+
+            <h4>Instance Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>.readLine()</code></td><td><code>str</code></td><td>Read next line (without newline)</td></tr>
+                <tr><td><code>.readLines()</code></td><td><code>str[]</code></td><td>Read all remaining lines into array</td></tr>
+                <tr><td><code>.readWord()</code></td><td><code>str</code></td><td>Read next whitespace-delimited token</td></tr>
+                <tr><td><code>.readChar()</code></td><td><code>int</code></td><td>Read single character (-1 at EOF)</td></tr>
+                <tr><td><code>.readRemaining()</code></td><td><code>str</code></td><td>Read all remaining content</td></tr>
+                <tr><td><code>.writeLine(text)</code></td><td><code>void</code></td><td>Write string + newline</td></tr>
+                <tr><td><code>.write(text)</code></td><td><code>void</code></td><td>Write string (no newline)</td></tr>
+                <tr><td><code>.writeChar(ch)</code></td><td><code>void</code></td><td>Write single character</td></tr>
+                <tr><td><code>.isEof()</code></td><td><code>bool</code></td><td>Check if at end of file</td></tr>
+                <tr><td><code>.hasLines()</code></td><td><code>bool</code></td><td>Check if more lines available</td></tr>
+                <tr><td><code>.hasWords()</code></td><td><code>bool</code></td><td>Check if more tokens available</td></tr>
+                <tr><td><code>.position()</code></td><td><code>int</code></td><td>Get current byte position</td></tr>
+                <tr><td><code>.seek(pos)</code></td><td><code>void</code></td><td>Seek to byte position</td></tr>
+                <tr><td><code>.rewind()</code></td><td><code>void</code></td><td>Return to beginning</td></tr>
+                <tr><td><code>.flush()</code></td><td><code>void</code></td><td>Force write to disk</td></tr>
+                <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close file handle</td></tr>
+            </table>
+
+            <h4>Properties</h4>
+            <table>
+                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                <tr><td><code>.path</code></td><td><code>str</code></td><td>Full file path</td></tr>
+                <tr><td><code>.name</code></td><td><code>str</code></td><td>Filename only</td></tr>
+                <tr><td><code>.size</code></td><td><code>int</code></td><td>File size in bytes</td></tr>
+            </table>
+
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/io/textfile"</span>
 
-<span class="comment">// Read entire file</span>
+<span class="comment">// Quick read/write</span>
 <span class="keyword">var</span> content: <span class="type">str</span> = TextFile.<span class="function">readAll</span>(<span class="string">"data.txt"</span>)
+TextFile.<span class="function">writeAll</span>(<span class="string">"output.txt"</span>, content.<span class="function">toUpper</span>())
 
-<span class="comment">// Write entire file</span>
-TextFile.<span class="function">writeAll</span>(<span class="string">"output.txt"</span>, <span class="string">"Hello, World!"</span>)
-
-<span class="comment">// Line-by-line reading</span>
+<span class="comment">// Streaming line-by-line</span>
 <span class="keyword">var</span> f: <span class="type">TextFile</span> = TextFile.<span class="function">open</span>(<span class="string">"data.txt"</span>)
-<span class="keyword">while</span> !f.<span class="function">eof</span>() =>
+<span class="keyword">while</span> f.<span class="function">hasLines</span>() =>
     <span class="keyword">var</span> line: <span class="type">str</span> = f.<span class="function">readLine</span>()
-    <span class="function">print</span>(line)
-f.<span class="function">close</span>()</code></pre>
+    <span class="keyword">if</span> !line.<span class="function">isBlank</span>() =>
+        <span class="function">print</span>(<span class="string">$"Line: {line}\n"</span>)
+f.<span class="function">close</span>()
 
-            <h3>Binary Files</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/io/binaryfile"</span>
+<span class="comment">// Safe pattern - check existence first</span>
+<span class="keyword">if</span> TextFile.<span class="function">exists</span>(<span class="string">"config.txt"</span>) =>
+    <span class="keyword">var</span> cfg: <span class="type">str</span> = TextFile.<span class="function">readAll</span>(<span class="string">"config.txt"</span>)
+<span class="keyword">else</span> =>
+    <span class="function">print</span>(<span class="string">"Config not found, using defaults\n"</span>)</code></pre>
 
-<span class="keyword">var</span> data: <span class="type">byte[]</span> = BinaryFile.<span class="function">readAll</span>(<span class="string">"image.bin"</span>)
-BinaryFile.<span class="function">writeAll</span>(<span class="string">"copy.bin"</span>, data)</code></pre>
+            <h3>BinaryFile</h3>
+            <p><code>import "sdk/io/binaryfile"</code></p>
 
-            <h3>Path Operations</h3>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>BinaryFile.readAll(path)</code></td><td><code>byte[]</code></td><td>Read entire file as bytes</td></tr>
+                <tr><td><code>BinaryFile.writeAll(path, data)</code></td><td><code>void</code></td><td>Write bytes to file</td></tr>
+                <tr><td><code>BinaryFile.exists(path)</code></td><td><code>bool</code></td><td>Check if file exists</td></tr>
+                <tr><td><code>BinaryFile.copy(src, dest)</code></td><td><code>void</code></td><td>Copy file</td></tr>
+                <tr><td><code>BinaryFile.open(path)</code></td><td><code>BinaryFile</code></td><td>Open for streaming</td></tr>
+                <tr><td><code>.read(maxBytes)</code></td><td><code>byte[]</code></td><td>Read up to n bytes</td></tr>
+                <tr><td><code>.write(data)</code></td><td><code>int</code></td><td>Write bytes, return count</td></tr>
+                <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close handle</td></tr>
+            </table>
+
+            <h3>Path</h3>
+            <p><code>import "sdk/io/path"</code></p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Path.directory(path)</code></td><td><code>str</code></td><td>Extract directory: <code>"/home/user/file.txt"</code> &rarr; <code>"/home/user"</code></td></tr>
+                <tr><td><code>Path.filename(path)</code></td><td><code>str</code></td><td>Extract filename: <code>"/home/user/file.txt"</code> &rarr; <code>"file.txt"</code></td></tr>
+                <tr><td><code>Path.extension(path)</code></td><td><code>str</code></td><td>Extract extension: <code>"file.txt"</code> &rarr; <code>"txt"</code></td></tr>
+                <tr><td><code>Path.join(parts...)</code></td><td><code>str</code></td><td>Join path components: <code>Path.join("/home", "user", "file")</code></td></tr>
+                <tr><td><code>Path.absolute(path)</code></td><td><code>str</code></td><td>Resolve to absolute path</td></tr>
+                <tr><td><code>Path.exists(path)</code></td><td><code>bool</code></td><td>Check if path exists (file or dir)</td></tr>
+                <tr><td><code>Path.isFile(path)</code></td><td><code>bool</code></td><td>Check if path is a file</td></tr>
+                <tr><td><code>Path.isDirectory(path)</code></td><td><code>bool</code></td><td>Check if path is a directory</td></tr>
+            </table>
+
+            <h3>Directory</h3>
+            <p><code>import "sdk/io/directory"</code></p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Directory.list(path)</code></td><td><code>str[]</code></td><td>List files and directories</td></tr>
+                <tr><td><code>Directory.listRecursive(path)</code></td><td><code>str[]</code></td><td>List all files recursively</td></tr>
+                <tr><td><code>Directory.create(path)</code></td><td><code>void</code></td><td>Create directory (and parents)</td></tr>
+                <tr><td><code>Directory.delete(path)</code></td><td><code>void</code></td><td>Delete empty directory</td></tr>
+                <tr><td><code>Directory.deleteRecursive(path)</code></td><td><code>void</code></td><td>Delete directory and contents</td></tr>
+            </table>
+
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/io/path"</span>
+<span class="keyword">import</span> <span class="string">"sdk/io/directory"</span>
 
-<span class="keyword">var</span> dir: <span class="type">str</span> = Path.<span class="function">directory</span>(<span class="string">"/home/user/file.txt"</span>)  <span class="comment">// "/home/user"</span>
-<span class="keyword">var</span> name: <span class="type">str</span> = Path.<span class="function">filename</span>(<span class="string">"/home/user/file.txt"</span>)   <span class="comment">// "file.txt"</span>
-<span class="keyword">var</span> ext: <span class="type">str</span> = Path.<span class="function">extension</span>(<span class="string">"/home/user/file.txt"</span>)  <span class="comment">// ".txt"</span></code></pre>
+<span class="comment">// Find all .sn files</span>
+<span class="keyword">fn</span> <span class="function">findSnFiles</span>(dir: <span class="type">str</span>): <span class="type">str[]</span> =>
+    <span class="keyword">var</span> result: <span class="type">str[]</span> = {}
+    <span class="keyword">var</span> files: <span class="type">str[]</span> = Directory.<span class="function">listRecursive</span>(dir)
+    <span class="keyword">for</span> file <span class="keyword">in</span> files =>
+        <span class="keyword">if</span> Path.<span class="function">extension</span>(file) == <span class="string">"sn"</span> =>
+            result.<span class="function">push</span>(file)
+    <span class="keyword">return</span> result
 
-            <h3>Directory Operations</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/io/directory"</span>
+<span class="comment">// Create output directory</span>
+<span class="keyword">if</span> !Path.<span class="function">exists</span>(<span class="string">"/output"</span>) =>
+    Directory.<span class="function">create</span>(<span class="string">"/output"</span>)</code></pre>
 
-<span class="keyword">var</span> files: <span class="type">str[]</span> = Directory.<span class="function">list</span>(<span class="string">"/home/user"</span>)
-Directory.<span class="function">create</span>(<span class="string">"/tmp/newdir"</span>)
-Directory.<span class="function">delete</span>(<span class="string">"/tmp/newdir"</span>)</code></pre>
+            <h3>Bytes Encoding</h3>
+            <p><code>import "sdk/io/bytes"</code></p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Bytes.fromHex(str)</code></td><td><code>byte[]</code></td><td>Decode hex string to bytes</td></tr>
+                <tr><td><code>Bytes.fromBase64(str)</code></td><td><code>byte[]</code></td><td>Decode base64 to bytes</td></tr>
+                <tr><td><code>data.toHex()</code></td><td><code>str</code></td><td>Encode bytes as hex string</td></tr>
+                <tr><td><code>data.toBase64()</code></td><td><code>str</code></td><td>Encode bytes as base64</td></tr>
+                <tr><td><code>data.toString()</code></td><td><code>str</code></td><td>Decode bytes as UTF-8 string</td></tr>
+            </table>
+
+            <h3>Threading with I/O</h3>
+            <pre><code><span class="comment">// Parallel file reads</span>
+<span class="keyword">var</span> f1: <span class="type">str</span> = &TextFile.<span class="function">readAll</span>(<span class="string">"file1.txt"</span>)
+<span class="keyword">var</span> f2: <span class="type">str</span> = &TextFile.<span class="function">readAll</span>(<span class="string">"file2.txt"</span>)
+<span class="keyword">var</span> f3: <span class="type">str</span> = &TextFile.<span class="function">readAll</span>(<span class="string">"file3.txt"</span>)
+[f1, f2, f3]!
+<span class="function">print</span>(<span class="string">$"Total: {f1.length + f2.length + f3.length} bytes\n"</span>)
+
+<span class="comment">// Background write (fire and forget)</span>
+&TextFile.<span class="function">writeAll</span>(<span class="string">"backup.txt"</span>, data)</code></pre>
         </section>
 
         <!-- SDK Networking Section -->
         <section id="sdk-net">
             <h2>Networking</h2>
 
-            <h3>TCP Server</h3>
+            <h3>TcpListener</h3>
+            <p><code>import "sdk/net/tcp"</code> - TCP server socket for accepting connections.</p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>TcpListener.bind(address)</code></td><td><code>TcpListener</code></td><td>Bind to address (e.g., <code>":8080"</code>, <code>"127.0.0.1:8080"</code>)</td></tr>
+                <tr><td><code>.accept()</code></td><td><code>TcpStream</code></td><td>Wait for and accept incoming connection</td></tr>
+                <tr><td><code>.port()</code></td><td><code>int</code></td><td>Get bound port (useful with <code>":0"</code>)</td></tr>
+                <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close listener</td></tr>
+            </table>
+
+            <h3>TcpStream</h3>
+            <p>Bidirectional TCP connection (client or accepted server connection).</p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>TcpStream.connect(address)</code></td><td><code>TcpStream</code></td><td>Connect to remote address</td></tr>
+                <tr><td><code>.read(maxBytes)</code></td><td><code>byte[]</code></td><td>Read up to n bytes (may return fewer)</td></tr>
+                <tr><td><code>.readAll()</code></td><td><code>byte[]</code></td><td>Read until connection closes</td></tr>
+                <tr><td><code>.readLine()</code></td><td><code>str</code></td><td>Read until newline</td></tr>
+                <tr><td><code>.write(data)</code></td><td><code>int</code></td><td>Write bytes, return count written</td></tr>
+                <tr><td><code>.writeLine(text)</code></td><td><code>void</code></td><td>Write string + newline</td></tr>
+                <tr><td><code>.remoteAddress()</code></td><td><code>str</code></td><td>Get remote peer's address</td></tr>
+                <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close connection</td></tr>
+            </table>
+
+            <h3>UdpSocket</h3>
+            <p><code>import "sdk/net/udp"</code> - Connectionless UDP socket.</p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>UdpSocket.bind(address)</code></td><td><code>UdpSocket</code></td><td>Bind to local address</td></tr>
+                <tr><td><code>.sendTo(data, address)</code></td><td><code>int</code></td><td>Send datagram to address</td></tr>
+                <tr><td><code>.receiveFrom(maxBytes)</code></td><td><code>UdpReceiveResult</code></td><td>Receive datagram</td></tr>
+                <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close socket</td></tr>
+            </table>
+
+            <table>
+                <tr><th>UdpReceiveResult</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>.data()</code></td><td><code>byte[]</code></td><td>Received data</td></tr>
+                <tr><td><code>.sender()</code></td><td><code>str</code></td><td>Sender's address</td></tr>
+            </table>
+
+            <h3>Address Formats</h3>
+            <table>
+                <tr><th>Format</th><th>Description</th></tr>
+                <tr><td><code>"127.0.0.1:8080"</code></td><td>IPv4 with port</td></tr>
+                <tr><td><code>"[::1]:8080"</code></td><td>IPv6 with port</td></tr>
+                <tr><td><code>":8080"</code></td><td>All interfaces, specific port</td></tr>
+                <tr><td><code>":0"</code></td><td>All interfaces, OS-assigned port</td></tr>
+                <tr><td><code>"example.com:80"</code></td><td>Hostname (DNS resolved)</td></tr>
+            </table>
+
+            <h3>Examples</h3>
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/net/tcp"</span>
 
-<span class="keyword">var</span> server: <span class="type">TcpListener</span> = TcpListener.<span class="function">bind</span>(<span class="string">":8080"</span>)
-<span class="keyword">var</span> client: <span class="type">TcpStream</span> = server.<span class="function">accept</span>()
-<span class="keyword">var</span> line: <span class="type">str</span> = client.<span class="function">readLine</span>()
-client.<span class="function">writeLine</span>(<span class="string">$"Echo: {line}"</span>)
-client.<span class="function">close</span>()
-server.<span class="function">close</span>()</code></pre>
+<span class="comment">// Echo server with threading</span>
+<span class="keyword">fn</span> <span class="function">handleClient</span>(client: <span class="type">TcpStream</span>): <span class="type">void</span> =>
+    <span class="keyword">var</span> line: <span class="type">str</span> = client.<span class="function">readLine</span>()
+    client.<span class="function">writeLine</span>(<span class="string">$"Echo: {line}"</span>)
+    client.<span class="function">close</span>()
 
-            <h3>TCP Client</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/net/tcp"</span>
+<span class="keyword">fn</span> <span class="function">main</span>(): <span class="type">int</span> =>
+    <span class="keyword">var</span> server: <span class="type">TcpListener</span> = TcpListener.<span class="function">bind</span>(<span class="string">":8080"</span>)
+    <span class="function">print</span>(<span class="string">$"Listening on port {server.port()}\n"</span>)
 
-<span class="keyword">var</span> conn: <span class="type">TcpStream</span> = TcpStream.<span class="function">connect</span>(<span class="string">"example.com:80"</span>)
-conn.<span class="function">writeLine</span>(<span class="string">"GET / HTTP/1.0"</span>)
-conn.<span class="function">writeLine</span>(<span class="string">""</span>)
-<span class="keyword">var</span> response: <span class="type">byte[]</span> = conn.<span class="function">readAll</span>()
-<span class="function">print</span>(response.<span class="function">toString</span>())
-conn.<span class="function">close</span>()</code></pre>
+    <span class="keyword">while</span> <span class="keyword">true</span> =>
+        <span class="keyword">var</span> client: <span class="type">TcpStream</span> = server.<span class="function">accept</span>()
+        &<span class="function">handleClient</span>(client)  <span class="comment">// Handle in background thread</span>
 
-            <h3>UDP</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/net/udp"</span>
+    <span class="keyword">return</span> <span class="number">0</span></code></pre>
 
-<span class="keyword">var</span> socket: <span class="type">UdpSocket</span> = UdpSocket.<span class="function">bind</span>(<span class="string">":9000"</span>)
-<span class="keyword">var</span> result: <span class="type">UdpReceiveResult</span> = socket.<span class="function">receiveFrom</span>(<span class="number">1024</span>)
-socket.<span class="function">sendTo</span>(result.<span class="function">data</span>(), result.<span class="function">sender</span>())
-socket.<span class="function">close</span>()</code></pre>
+            <pre><code><span class="comment">// Simple HTTP GET request</span>
+<span class="keyword">fn</span> <span class="function">httpGet</span>(host: <span class="type">str</span>, path: <span class="type">str</span>): <span class="type">str</span> =>
+    <span class="keyword">var</span> conn: <span class="type">TcpStream</span> = TcpStream.<span class="function">connect</span>(<span class="string">$"{host}:80"</span>)
+    conn.<span class="function">writeLine</span>(<span class="string">$"GET {path} HTTP/1.0"</span>)
+    conn.<span class="function">writeLine</span>(<span class="string">$"Host: {host}"</span>)
+    conn.<span class="function">writeLine</span>(<span class="string">""</span>)
+    <span class="keyword">var</span> response: <span class="type">byte[]</span> = conn.<span class="function">readAll</span>()
+    conn.<span class="function">close</span>()
+    <span class="keyword">return</span> response.<span class="function">toString</span>()
+
+<span class="comment">// Parallel connections</span>
+<span class="keyword">var</span> c1: <span class="type">TcpStream</span> = &TcpStream.<span class="function">connect</span>(<span class="string">"api1.example.com:80"</span>)
+<span class="keyword">var</span> c2: <span class="type">TcpStream</span> = &TcpStream.<span class="function">connect</span>(<span class="string">"api2.example.com:80"</span>)
+[c1, c2]!  <span class="comment">// Wait for both to connect</span></code></pre>
         </section>
 
         <!-- SDK Other Section -->
@@ -1273,57 +1432,236 @@ socket.<span class="function">close</span>()</code></pre>
             <h2>Date, Time, Random, UUID</h2>
 
             <h3>Date</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/date"</span>
+            <p><code>import "sdk/date"</code></p>
 
-<span class="keyword">var</span> today: <span class="type">Date</span> = Date.<span class="function">today</span>()
-<span class="keyword">var</span> birthday: <span class="type">Date</span> = Date.<span class="function">fromYmd</span>(<span class="number">2025</span>, <span class="number">6</span>, <span class="number">15</span>)
-<span class="keyword">var</span> days: <span class="type">int</span> = birthday.<span class="function">diffDays</span>(today)
-<span class="function">print</span>(<span class="string">$"Days until birthday: {days}\n"</span>)</code></pre>
+            <h4>Static Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Date.today()</code></td><td><code>Date</code></td><td>Current local date</td></tr>
+                <tr><td><code>Date.fromYmd(y, m, d)</code></td><td><code>Date</code></td><td>Create from year, month, day</td></tr>
+                <tr><td><code>Date.fromString(str)</code></td><td><code>Date</code></td><td>Parse ISO string</td></tr>
+                <tr><td><code>Date.fromEpochDays(days)</code></td><td><code>Date</code></td><td>Create from epoch days</td></tr>
+                <tr><td><code>Date.isLeapYear(year)</code></td><td><code>bool</code></td><td>Check if year is leap year</td></tr>
+                <tr><td><code>Date.daysInMonth(y, m)</code></td><td><code>int</code></td><td>Days in given month</td></tr>
+            </table>
+
+            <h4>Instance Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>.year()</code>, <code>.month()</code>, <code>.day()</code></td><td><code>int</code></td><td>Get date components</td></tr>
+                <tr><td><code>.weekday()</code></td><td><code>int</code></td><td>Day of week (0=Sunday)</td></tr>
+                <tr><td><code>.dayOfYear()</code></td><td><code>int</code></td><td>Day of year (1-366)</td></tr>
+                <tr><td><code>.isWeekend()</code>, <code>.isWeekday()</code></td><td><code>bool</code></td><td>Day type checks</td></tr>
+                <tr><td><code>.format(pattern)</code></td><td><code>str</code></td><td>Format: <code>"YYYY-MM-DD"</code></td></tr>
+                <tr><td><code>.toIso()</code></td><td><code>str</code></td><td>ISO 8601 format</td></tr>
+                <tr><td><code>.addDays(n)</code>, <code>.addWeeks(n)</code></td><td><code>Date</code></td><td>Date arithmetic</td></tr>
+                <tr><td><code>.addMonths(n)</code>, <code>.addYears(n)</code></td><td><code>Date</code></td><td>Date arithmetic</td></tr>
+                <tr><td><code>.diffDays(other)</code></td><td><code>int</code></td><td>Days between dates</td></tr>
+                <tr><td><code>.isBefore(other)</code>, <code>.isAfter(other)</code></td><td><code>bool</code></td><td>Comparison</td></tr>
+                <tr><td><code>.startOfMonth()</code>, <code>.endOfMonth()</code></td><td><code>Date</code></td><td>Month boundaries</td></tr>
+            </table>
 
             <h3>Time</h3>
-            <pre><code><span class="keyword">import</span> <span class="string">"sdk/time"</span>
+            <p><code>import "sdk/time"</code></p>
 
+            <h4>Static Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Time.now()</code></td><td><code>Time</code></td><td>Current local time</td></tr>
+                <tr><td><code>Time.utc()</code></td><td><code>Time</code></td><td>Current UTC time</td></tr>
+                <tr><td><code>Time.fromMillis(ms)</code></td><td><code>Time</code></td><td>From epoch milliseconds</td></tr>
+                <tr><td><code>Time.fromSeconds(s)</code></td><td><code>Time</code></td><td>From epoch seconds</td></tr>
+                <tr><td><code>Time.sleep(ms)</code></td><td><code>void</code></td><td>Sleep for milliseconds</td></tr>
+            </table>
+
+            <h4>Instance Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>.millis()</code>, <code>.seconds()</code></td><td><code>long</code></td><td>Get epoch time</td></tr>
+                <tr><td><code>.year()</code>, <code>.month()</code>, <code>.day()</code></td><td><code>int</code></td><td>Date components</td></tr>
+                <tr><td><code>.hour()</code>, <code>.minute()</code>, <code>.second()</code></td><td><code>int</code></td><td>Time components</td></tr>
+                <tr><td><code>.format(pattern)</code></td><td><code>str</code></td><td>Format: <code>"YYYY-MM-DD HH:mm:ss"</code></td></tr>
+                <tr><td><code>.toIso()</code></td><td><code>str</code></td><td>ISO 8601 format</td></tr>
+                <tr><td><code>.add(ms)</code>, <code>.addSeconds(n)</code></td><td><code>Time</code></td><td>Time arithmetic</td></tr>
+                <tr><td><code>.addMinutes(n)</code>, <code>.addHours(n)</code></td><td><code>Time</code></td><td>Time arithmetic</td></tr>
+                <tr><td><code>.diff(other)</code></td><td><code>int</code></td><td>Milliseconds between times</td></tr>
+                <tr><td><code>.isBefore(other)</code>, <code>.isAfter(other)</code></td><td><code>bool</code></td><td>Comparison</td></tr>
+            </table>
+
+            <pre><code><span class="keyword">import</span> <span class="string">"sdk/date"</span>
+<span class="keyword">import</span> <span class="string">"sdk/time"</span>
+
+<span class="comment">// Measure elapsed time</span>
 <span class="keyword">var</span> start: <span class="type">Time</span> = Time.<span class="function">now</span>()
-<span class="function">doWork</span>()
+<span class="function">doExpensiveWork</span>()
 <span class="keyword">var</span> elapsed: <span class="type">int</span> = Time.<span class="function">now</span>().<span class="function">diff</span>(start)
-<span class="function">print</span>(<span class="string">$"Elapsed: {elapsed}ms\n"</span>)</code></pre>
+<span class="function">print</span>(<span class="string">$"Completed in {elapsed}ms\n"</span>)
+
+<span class="comment">// Date calculations</span>
+<span class="keyword">var</span> today: <span class="type">Date</span> = Date.<span class="function">today</span>()
+<span class="keyword">var</span> deadline: <span class="type">Date</span> = Date.<span class="function">fromYmd</span>(<span class="number">2025</span>, <span class="number">12</span>, <span class="number">31</span>)
+<span class="keyword">var</span> daysLeft: <span class="type">int</span> = deadline.<span class="function">diffDays</span>(today)
+<span class="function">print</span>(<span class="string">$"{daysLeft} days until deadline\n"</span>)</code></pre>
 
             <h3>Random</h3>
+            <p><code>import "sdk/random"</code> - Secure by default (uses OS entropy), with optional seeding for reproducibility.</p>
+
+            <h4>Static Methods (OS Entropy)</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Random.int(min, max)</code></td><td><code>int</code></td><td>Random int in [min, max] inclusive</td></tr>
+                <tr><td><code>Random.long(min, max)</code></td><td><code>long</code></td><td>Random long in [min, max] inclusive</td></tr>
+                <tr><td><code>Random.double(min, max)</code></td><td><code>double</code></td><td>Random double in [min, max)</td></tr>
+                <tr><td><code>Random.bool()</code></td><td><code>bool</code></td><td>Random boolean (50/50)</td></tr>
+                <tr><td><code>Random.byte()</code></td><td><code>byte</code></td><td>Random byte (0-255)</td></tr>
+                <tr><td><code>Random.bytes(count)</code></td><td><code>byte[]</code></td><td>Array of random bytes</td></tr>
+                <tr><td><code>Random.gaussian(mean, stddev)</code></td><td><code>double</code></td><td>Normal distribution sample</td></tr>
+            </table>
+
+            <h4>Collection Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Random.choice(array)</code></td><td><code>T</code></td><td>Random element from array</td></tr>
+                <tr><td><code>Random.weightedChoice(array, weights)</code></td><td><code>T</code></td><td>Random with probability weights</td></tr>
+                <tr><td><code>Random.shuffle(array)</code></td><td><code>void</code></td><td>Shuffle array in place</td></tr>
+                <tr><td><code>Random.sample(array, count)</code></td><td><code>T[]</code></td><td>Sample without replacement</td></tr>
+            </table>
+
+            <h4>Seeded Random (Reproducible)</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Random.create()</code></td><td><code>Random</code></td><td>Create OS-entropy instance</td></tr>
+                <tr><td><code>Random.createWithSeed(seed)</code></td><td><code>Random</code></td><td>Create seeded PRNG (reproducible)</td></tr>
+            </table>
+
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/random"</span>
 
+<span class="comment">// Simple random values</span>
 <span class="keyword">var</span> dice: <span class="type">int</span> = Random.<span class="function">int</span>(<span class="number">1</span>, <span class="number">6</span>)
 <span class="keyword">var</span> coin: <span class="type">bool</span> = Random.<span class="function">bool</span>()
+
+<span class="comment">// Collections</span>
 <span class="keyword">var</span> colors: <span class="type">str[]</span> = {<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>}
 <span class="keyword">var</span> pick: <span class="type">str</span> = Random.<span class="function">choice</span>(colors)
-Random.<span class="function">shuffle</span>(colors)</code></pre>
+Random.<span class="function">shuffle</span>(colors)
+
+<span class="comment">// Weighted selection (loot drops)</span>
+<span class="keyword">var</span> items: <span class="type">str[]</span> = {<span class="string">"common"</span>, <span class="string">"rare"</span>, <span class="string">"legendary"</span>}
+<span class="keyword">var</span> weights: <span class="type">double[]</span> = {<span class="number">0.7</span>, <span class="number">0.25</span>, <span class="number">0.05</span>}
+<span class="keyword">var</span> drop: <span class="type">str</span> = Random.<span class="function">weightedChoice</span>(items, weights)
+
+<span class="comment">// Reproducible sequence (for testing/procedural gen)</span>
+<span class="keyword">var</span> rng: <span class="type">Random</span> = Random.<span class="function">createWithSeed</span>(<span class="number">12345</span>)
+<span class="keyword">var</span> a: <span class="type">int</span> = rng.<span class="function">int</span>(<span class="number">1</span>, <span class="number">100</span>)  <span class="comment">// Same value every run</span></code></pre>
 
             <h3>UUID</h3>
+            <p><code>import "sdk/uuid"</code> - Supports v4 (random), v5 (deterministic), and v7 (time-ordered).</p>
+
+            <h4>Factory Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>UUID.create()</code></td><td><code>UUID</code></td><td>Generate UUIDv7 (recommended default)</td></tr>
+                <tr><td><code>UUID.v7()</code></td><td><code>UUID</code></td><td>Generate UUIDv7 (time-ordered)</td></tr>
+                <tr><td><code>UUID.v4()</code></td><td><code>UUID</code></td><td>Generate UUIDv4 (random)</td></tr>
+                <tr><td><code>UUID.v5(namespace, name)</code></td><td><code>UUID</code></td><td>Deterministic from namespace + name</td></tr>
+                <tr><td><code>UUID.fromString(str)</code></td><td><code>UUID</code></td><td>Parse standard 36-char format</td></tr>
+                <tr><td><code>UUID.fromHex(str)</code></td><td><code>UUID</code></td><td>Parse 32-char hex</td></tr>
+                <tr><td><code>UUID.fromBase64(str)</code></td><td><code>UUID</code></td><td>Parse 22-char URL-safe base64</td></tr>
+                <tr><td><code>UUID.nil()</code></td><td><code>UUID</code></td><td>All-zeros UUID</td></tr>
+            </table>
+
+            <h4>Namespace Constants (for v5)</h4>
+            <table>
+                <tr><th>Method</th><th>Description</th></tr>
+                <tr><td><code>UUID.namespaceDns()</code></td><td>DNS namespace</td></tr>
+                <tr><td><code>UUID.namespaceUrl()</code></td><td>URL namespace</td></tr>
+                <tr><td><code>UUID.namespaceOid()</code></td><td>OID namespace</td></tr>
+                <tr><td><code>UUID.namespaceX500()</code></td><td>X.500 DN namespace</td></tr>
+            </table>
+
+            <h4>Instance Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>.version()</code></td><td><code>int</code></td><td>UUID version (4, 5, or 7)</td></tr>
+                <tr><td><code>.isNil()</code></td><td><code>bool</code></td><td>Check if nil UUID</td></tr>
+                <tr><td><code>.timestamp()</code></td><td><code>long</code></td><td>Unix ms (v7 only, panics otherwise)</td></tr>
+                <tr><td><code>.time()</code></td><td><code>Time</code></td><td>Creation time (v7 only)</td></tr>
+                <tr><td><code>.toString()</code></td><td><code>str</code></td><td>Standard 36-char format</td></tr>
+                <tr><td><code>.toHex()</code></td><td><code>str</code></td><td>32-char hex (no dashes)</td></tr>
+                <tr><td><code>.toBase64()</code></td><td><code>str</code></td><td>22-char URL-safe base64</td></tr>
+                <tr><td><code>.toBytes()</code></td><td><code>byte[]</code></td><td>16-byte array</td></tr>
+            </table>
+
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/uuid"</span>
 
-<span class="keyword">var</span> id: <span class="type">UUID</span> = UUID.<span class="function">create</span>()     <span class="comment">// v7 (time-ordered)</span>
-<span class="keyword">var</span> random: <span class="type">UUID</span> = UUID.<span class="function">v4</span>()    <span class="comment">// v4 (pure random)</span>
+<span class="comment">// Generate UUIDs</span>
+<span class="keyword">var</span> id: <span class="type">UUID</span> = UUID.<span class="function">create</span>()       <span class="comment">// v7 - time-ordered (best for DBs)</span>
+<span class="keyword">var</span> random: <span class="type">UUID</span> = UUID.<span class="function">v4</span>()      <span class="comment">// v4 - pure random</span>
 <span class="function">print</span>(<span class="string">$"ID: {id}\n"</span>)
 
-<span class="comment">// Parse from string</span>
-<span class="keyword">var</span> parsed: <span class="type">UUID</span> = UUID.<span class="function">fromString</span>(<span class="string">"01912345-6789-7abc-8def-0123456789ab"</span>)</code></pre>
+<span class="comment">// Deterministic UUID (same input = same output)</span>
+<span class="keyword">var</span> ns: <span class="type">UUID</span> = UUID.<span class="function">namespaceUrl</span>()
+<span class="keyword">var</span> userId: <span class="type">UUID</span> = UUID.<span class="function">v5</span>(ns, <span class="string">"https://myapp.com/users/alice"</span>)
+
+<span class="comment">// Extract timestamp from v7</span>
+<span class="keyword">if</span> id.<span class="function">version</span>() == <span class="number">7</span> =>
+    <span class="keyword">var</span> created: <span class="type">Time</span> = id.<span class="function">time</span>()
+    <span class="function">print</span>(<span class="string">$"Created: {created.toIso()}\n"</span>)
+
+<span class="comment">// Compact URL format</span>
+<span class="keyword">var</span> url: <span class="type">str</span> = <span class="string">$"/users/{id.toBase64()}/profile"</span></code></pre>
 
             <h3>Environment</h3>
+            <p><code>import "sdk/env"</code></p>
+
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Environment.get(name)</code></td><td><code>str</code></td><td>Get variable (panics if not set)</td></tr>
+                <tr><td><code>Environment.getOr(name, default)</code></td><td><code>str</code></td><td>Get with default value</td></tr>
+                <tr><td><code>Environment.has(name)</code></td><td><code>bool</code></td><td>Check if variable is set</td></tr>
+                <tr><td><code>Environment.all()</code></td><td><code>str[][]</code></td><td>All variables as [[name, value], ...]</td></tr>
+            </table>
+
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/env"</span>
 
 <span class="keyword">var</span> user: <span class="type">str</span> = Environment.<span class="function">getOr</span>(<span class="string">"USER"</span>, <span class="string">"unknown"</span>)
 <span class="keyword">var</span> apiKey: <span class="type">str</span> = Environment.<span class="function">get</span>(<span class="string">"API_KEY"</span>)  <span class="comment">// panics if not set</span>
 
 <span class="keyword">if</span> Environment.<span class="function">has</span>(<span class="string">"DEBUG"</span>) =>
-  <span class="function">enableDebugMode</span>()</code></pre>
+    <span class="function">enableDebugMode</span>()</code></pre>
 
             <h3>Process</h3>
+            <p><code>import "sdk/process"</code></p>
+
+            <h4>Static Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>Process.run(cmd)</code></td><td><code>Process</code></td><td>Run command with no arguments</td></tr>
+                <tr><td><code>Process.runArgs(cmd, args)</code></td><td><code>Process</code></td><td>Run command with arguments array</td></tr>
+            </table>
+
+            <h4>Instance Methods</h4>
+            <table>
+                <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+                <tr><td><code>.exitCode()</code></td><td><code>int</code></td><td>Exit code (0 = success)</td></tr>
+                <tr><td><code>.stdout()</code></td><td><code>str</code></td><td>Captured standard output</td></tr>
+                <tr><td><code>.stderr()</code></td><td><code>str</code></td><td>Captured standard error</td></tr>
+                <tr><td><code>.success()</code></td><td><code>bool</code></td><td>True if exit code is 0</td></tr>
+                <tr><td><code>.failed()</code></td><td><code>bool</code></td><td>True if exit code is non-zero</td></tr>
+                <tr><td><code>.notFound()</code></td><td><code>bool</code></td><td>True if command not found (127)</td></tr>
+            </table>
+
             <pre><code><span class="keyword">import</span> <span class="string">"sdk/process"</span>
 
-<span class="keyword">var</span> p: <span class="type">Process</span> = Process.<span class="function">runArgs</span>(<span class="string">"ls"</span>, {<span class="string">"-la"</span>})
+<span class="keyword">var</span> p: <span class="type">Process</span> = Process.<span class="function">runArgs</span>(<span class="string">"ls"</span>, {<span class="string">"-la"</span>, <span class="string">"/tmp"</span>})
 <span class="keyword">if</span> p.<span class="function">success</span>() =>
     <span class="function">print</span>(p.<span class="function">stdout</span>())
 <span class="keyword">else</span> =>
-    <span class="function">print</span>(<span class="string">$"Failed: {p.stderr()}"</span>)</code></pre>
+    <span class="function">print</span>(<span class="string">$"Failed with code {p.exitCode()}: {p.stderr()}"</span>)
+
+<span class="comment">// Shell commands (pipes, redirection)</span>
+<span class="keyword">var</span> p2: <span class="type">Process</span> = Process.<span class="function">runArgs</span>(<span class="string">"sh"</span>, {<span class="string">"-c"</span>, <span class="string">"ls -la | grep .txt"</span>})
+<span class="function">print</span>(p2.<span class="function">stdout</span>())</code></pre>
         </section>
 
         <!-- Footer -->
