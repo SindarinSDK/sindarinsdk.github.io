@@ -448,12 +448,13 @@
             <div class="nav-section-title">SDK Reference</div>
             <ul class="nav-links">
                 <li><a href="#sdk">Overview</a></li>
-                <li><a href="#sdk-io">TextFile, BinaryFile</a></li>
-                <li><a href="#sdk-io">Path, Directory</a></li>
-                <li><a href="#sdk-net">TCP, UDP</a></li>
-                <li><a href="#sdk-other">Date, Time</a></li>
-                <li><a href="#sdk-other">Random, UUID</a></li>
-                <li><a href="#sdk-other">Environment, Process</a></li>
+                <li><a href="#textfile">TextFile</a></li>
+                <li><a href="#path">Path, Directory</a></li>
+                <li><a href="#tcp">TCP, UDP</a></li>
+                <li><a href="#date">Date, Time</a></li>
+                <li><a href="#random">Random, UUID</a></li>
+                <li><a href="#environment">Environment</a></li>
+                <li><a href="#process">Process</a></li>
             </ul>
         </div>
 
@@ -1192,7 +1193,7 @@ numbers[<span class="number">0</span>] = <span class="number">99</span>         
         <section id="sdk-io">
             <h2>File I/O</h2>
 
-            <h3>TextFile</h3>
+            <h3 id="textfile">TextFile</h3>
             <p><code>import "sdk/io/textfile"</code></p>
 
             <h4>Static Methods</h4>
@@ -1256,7 +1257,7 @@ f.<span class="function">close</span>()
 <span class="keyword">else</span> =>
     <span class="function">print</span>(<span class="string">"Config not found, using defaults\n"</span>)</code></pre>
 
-            <h3>BinaryFile</h3>
+            <h3 id="binaryfile">BinaryFile</h3>
             <p><code>import "sdk/io/binaryfile"</code></p>
 
             <table>
@@ -1271,7 +1272,7 @@ f.<span class="function">close</span>()
                 <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close handle</td></tr>
             </table>
 
-            <h3>Path</h3>
+            <h3 id="path">Path</h3>
             <p><code>import "sdk/io/path"</code></p>
 
             <table>
@@ -1286,7 +1287,7 @@ f.<span class="function">close</span>()
                 <tr><td><code>Path.isDirectory(path)</code></td><td><code>bool</code></td><td>Check if path is a directory</td></tr>
             </table>
 
-            <h3>Directory</h3>
+            <h3 id="directory">Directory</h3>
             <p><code>import "sdk/io/directory"</code></p>
 
             <table>
@@ -1342,7 +1343,7 @@ f.<span class="function">close</span>()
         <section id="sdk-net">
             <h2>Networking</h2>
 
-            <h3>TcpListener</h3>
+            <h3 id="tcp">TcpListener</h3>
             <p><code>import "sdk/net/tcp"</code> - TCP server socket for accepting connections.</p>
 
             <table>
@@ -1368,7 +1369,7 @@ f.<span class="function">close</span>()
                 <tr><td><code>.close()</code></td><td><code>void</code></td><td>Close connection</td></tr>
             </table>
 
-            <h3>UdpSocket</h3>
+            <h3 id="udp">UdpSocket</h3>
             <p><code>import "sdk/net/udp"</code> - Connectionless UDP socket.</p>
 
             <table>
@@ -1434,7 +1435,7 @@ f.<span class="function">close</span>()
         <section id="sdk-other">
             <h2>Date, Time, Random, UUID</h2>
 
-            <h3>Date</h3>
+            <h3 id="date">Date</h3>
             <p><code>import "sdk/date"</code></p>
 
             <h4>Static Methods</h4>
@@ -1464,7 +1465,7 @@ f.<span class="function">close</span>()
                 <tr><td><code>.startOfMonth()</code>, <code>.endOfMonth()</code></td><td><code>Date</code></td><td>Month boundaries</td></tr>
             </table>
 
-            <h3>Time</h3>
+            <h3 id="time">Time</h3>
             <p><code>import "sdk/time"</code></p>
 
             <h4>Static Methods</h4>
@@ -1506,7 +1507,7 @@ f.<span class="function">close</span>()
 <span class="keyword">var</span> daysLeft: <span class="type">int</span> = deadline.<span class="function">diffDays</span>(today)
 <span class="function">print</span>(<span class="string">$"{daysLeft} days until deadline\n"</span>)</code></pre>
 
-            <h3>Random</h3>
+            <h3 id="random">Random</h3>
             <p><code>import "sdk/random"</code> - Secure by default (uses OS entropy), with optional seeding for reproducibility.</p>
 
             <h4>Static Methods (OS Entropy)</h4>
@@ -1557,7 +1558,7 @@ Random.<span class="function">shuffle</span>(colors)
 <span class="keyword">var</span> rng: <span class="type">Random</span> = Random.<span class="function">createWithSeed</span>(<span class="number">12345</span>)
 <span class="keyword">var</span> a: <span class="type">int</span> = rng.<span class="function">int</span>(<span class="number">1</span>, <span class="number">100</span>)  <span class="comment">// Same value every run</span></code></pre>
 
-            <h3>UUID</h3>
+            <h3 id="uuid">UUID</h3>
             <p><code>import "sdk/uuid"</code> - Supports v4 (random), v5 (deterministic), and v7 (time-ordered).</p>
 
             <h4>Factory Methods</h4>
@@ -1614,7 +1615,7 @@ Random.<span class="function">shuffle</span>(colors)
 <span class="comment">// Compact URL format</span>
 <span class="keyword">var</span> url: <span class="type">str</span> = <span class="string">$"/users/{id.toBase64()}/profile"</span></code></pre>
 
-            <h3>Environment</h3>
+            <h3 id="environment">Environment</h3>
             <p><code>import "sdk/env"</code></p>
 
             <table>
@@ -1633,7 +1634,7 @@ Random.<span class="function">shuffle</span>(colors)
 <span class="keyword">if</span> Environment.<span class="function">has</span>(<span class="string">"DEBUG"</span>) =>
     <span class="function">enableDebugMode</span>()</code></pre>
 
-            <h3>Process</h3>
+            <h3 id="process">Process</h3>
             <p><code>import "sdk/process"</code></p>
 
             <h4>Static Methods</h4>
