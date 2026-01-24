@@ -1,8 +1,4 @@
----
-title: Environment
-description: Environment variable access
-permalink: /sdk/os/env/
----
+# Environment in Sindarin
 
 The SDK `Environment` type provides access to environment variables.
 
@@ -180,4 +176,5 @@ fn getHomeDirectory(): str =>
 
 ## See Also
 
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/os/env.sn`

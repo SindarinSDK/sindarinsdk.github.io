@@ -1,8 +1,4 @@
----
-title: Interceptors
-description: Function interception for debugging and mocking
-permalink: /language/interceptors/
----
+# Function Interceptors in Sindarin
 
 Interceptors provide a way to intercept and modify the behavior of user-defined function calls at runtime. This enables debugging, profiling, mocking, logging, and aspect-oriented programming patterns.
 
@@ -489,5 +485,5 @@ Total intercepted calls: 2
 
 ## See Also
 
-- [Lambdas](/language/lambdas/) - Lambda expressions used in interceptor handlers
-- [Memory](/language/memory/) - Memory management in interceptors
+- [Lambdas](lambdas.md) - Lambda expressions used in interceptor handlers
+- [Memory](memory.md) - Memory management in interceptors

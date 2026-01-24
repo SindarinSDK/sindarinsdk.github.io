@@ -1,8 +1,4 @@
----
-title: ZLib
-description: Compression and decompression
-permalink: /sdk/encoding/zlib/
----
+# ZLib
 
 Provides zlib compression and decompression bindings with high-level convenience wrappers and low-level C library access.
 
@@ -215,5 +211,6 @@ fn main(): void =>
 
 ## See Also
 
-- [File I/O](/sdk/io/) - File operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [I/O](../io/readme.md) - File operations
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/encoding/zlib.sn`

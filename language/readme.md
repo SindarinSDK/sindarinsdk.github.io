@@ -1,22 +1,10 @@
----
-title: Overview
-description: Sindarin language philosophy, syntax overview, and compilation pipeline
-permalink: /language/overview/
----
+# Sindarin Language Overview
 
 Sindarin is a statically-typed procedural programming language that compiles to C. It features clean arrow-based syntax, powerful string interpolation, and built-in array operations.
 
-<div class="pipeline">
-  <div class="pipeline-step">.sn source</div>
-  <span class="pipeline-arrow">&rarr;</span>
-  <div class="pipeline-step">Sn Compiler</div>
-  <span class="pipeline-arrow">&rarr;</span>
-  <div class="pipeline-step">C code</div>
-  <span class="pipeline-arrow">&rarr;</span>
-  <div class="pipeline-step">GCC</div>
-  <span class="pipeline-arrow">&rarr;</span>
-  <div class="pipeline-step">executable</div>
-</div>
+```
+.sn source → Sn Compiler → C code → GCC → executable
+```
 
 ## Philosophy
 
@@ -97,7 +85,12 @@ fn greet(name: str): str => $"Hello, {name}!"
 fn isEven(n: int): bool => n % 2 == 0
 ```
 
-The expression after `=>` is implicitly returned.
+The expression after `=>` is implicitly returned. This is equivalent to:
+
+```sindarin
+fn add(a: int, b: int): int =>
+  return a + b
+```
 
 Expression-bodied syntax works with all function types including `native` functions:
 
@@ -192,6 +185,88 @@ if !isBlocked =>
   print("Access granted\n")
 ```
 
+## Quick Examples
+
+### Hello World
+
+```sindarin
+fn main(): void =>
+  print("Hello, World!\n")
+```
+
+### FizzBuzz
+
+```sindarin
+fn main(): void =>
+  for var i: int = 1; i <= 100; i++ =>
+    if i % 15 == 0 =>
+      print("FizzBuzz\n")
+    else if i % 3 == 0 =>
+      print("Fizz\n")
+    else if i % 5 == 0 =>
+      print("Buzz\n")
+    else =>
+      print($"{i}\n")
+```
+
+### Prime Finder
+
+```sindarin
+fn is_prime(n: int): bool =>
+  if n <= 1 =>
+    return false
+  var i: int = 2
+  while i * i <= n =>
+    if n % i == 0 =>
+      return false
+    i = i + 1
+  return true
+
+fn find_primes(limit: int): int[] =>
+  var primes: int[] = {}
+  for var n: int = 2; n <= limit; n++ =>
+    if is_prime(n) =>
+      primes.push(n)
+  return primes
+
+fn main(): void =>
+  var primes: int[] = find_primes(50)
+  print($"Found {primes.length} primes: {primes.join(\", \")}\n")
+```
+
+### File Processing
+
+```sindarin
+fn main(): void =>
+  // Read file and count lines
+  var content: str = TextFile.readAll("data.txt")
+  var lines: str[] = content.splitLines()
+
+  var nonEmpty: int = 0
+  for line in lines =>
+    if !line.isBlank() =>
+      nonEmpty = nonEmpty + 1
+
+  print($"Total lines: {lines.length}\n")
+  print($"Non-empty lines: {nonEmpty}\n")
+```
+
+### String Processing
+
+```sindarin
+fn main(): void =>
+  var text: str = "  Hello, World!  "
+
+  // Method chaining
+  var cleaned: str = text.trim().toLower()
+  print($"Cleaned: '{cleaned}'\n")
+
+  // Splitting and joining
+  var words: str[] = "apple,banana,cherry".split(",")
+  var sentence: str = words.join(" and ")
+  print($"Fruits: {sentence}\n")
+```
+
 ## Module System
 
 Split code across files with imports:
@@ -227,11 +302,11 @@ var original: int[] = {1, 2, 3}
 var copy: int[] as val = original  // Independent copy
 ```
 
-See [Memory](/language/memory/) for full documentation.
+See [Memory](memory.md) for full documentation.
 
 ## Compilation
 
-See [Building](/language/building/) for instructions on building the compiler from source.
+See [Building](building.md) for instructions on building the compiler from source.
 
 ```bash
 # Compile to executable
@@ -274,3 +349,25 @@ SN_DEBUG_CFLAGS="-g" bin/sn source.sn -g -o program
 # Link additional libraries
 SN_LDLIBS="-lssl -lcrypto" bin/sn source.sn -o program
 ```
+
+Note: The default runtime objects are compiled with GCC's LTO. To use a different compiler like clang, you may need to rebuild the runtime without LTO or adjust `SN_RELEASE_CFLAGS`.
+
+## Documentation Index
+
+### Core Language
+- [Building](building.md) - Build instructions for Linux, macOS, Windows
+- [Strings](strings.md) - String methods and interpolation
+- [Arrays](arrays.md) - Array operations and slicing
+- [Structs](structs.md) - Struct declarations and C interop
+- [Match](match.md) - Match expressions for multi-way branching
+- [Lambdas](lambdas.md) - Lambda expressions and closures
+- [Memory](memory.md) - Arena memory management
+
+### Advanced Features
+- [Threading](threading.md) - Threading with `&` spawn and `!` sync
+- [Namespaces](namespaces.md) - Namespaced imports for collision resolution
+- [Interop](interop.md) - C interoperability and native functions
+- [Interceptors](interceptors.md) - Function interception for debugging and mocking
+
+### SDK Modules
+See the [SDK documentation](sdk/readme.md) for built-in modules including Date, Time, File I/O, Networking, Random, UUID, Environment, and Process operations.

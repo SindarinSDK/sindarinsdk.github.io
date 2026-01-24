@@ -1,8 +1,4 @@
----
-title: Match
-description: Pattern matching and multi-way branching
-permalink: /language/match/
----
+# Match Expressions
 
 Sindarin supports pattern matching with the `match` expression. Match compares a subject expression against a series of arms using equality, executing the body of the first matching arm.
 
@@ -125,13 +121,13 @@ fn greet(lang: str): void =>
 
 Match subjects can be any type that supports equality comparison:
 
-- `int`, `long`, `byte` -- numeric equality
-- `str` -- string equality (uses runtime string comparison)
-- `char` -- character equality
-- `bool` -- boolean equality
+- `int`, `long`, `byte` — numeric equality
+- `str` — string equality (uses runtime string comparison)
+- `char` — character equality
+- `bool` — boolean equality
 
 ## Design Notes
 
-- **No fallthrough** -- each arm is independent; only the first matching arm executes.
-- **Evaluation order** -- the subject is evaluated once, arms are compared top-to-bottom.
-- **Single expression patterns** -- arm patterns are expressions (not destructuring patterns).
+- **No fallthrough** — each arm is independent; only the first matching arm executes.
+- **Evaluation order** — the subject is evaluated once, arms are compared top-to-bottom.
+- **Single expression patterns** — arm patterns are expressions (not destructuring patterns).

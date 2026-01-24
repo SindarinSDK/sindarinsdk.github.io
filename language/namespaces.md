@@ -1,8 +1,4 @@
----
-title: Namespaces
-description: Module imports and name collision resolution
-permalink: /language/namespaces/
----
+# Namespaces in Sindarin
 
 Sindarin extends its import system with optional namespace support. The existing import behavior remains unchanged, but a new `as` clause allows imports to be scoped under a namespace prefix.
 
@@ -269,3 +265,4 @@ fn main(): void =>
     print($"Product: {product}\n")   // Product: 42
     print($"Stars: {stars}\n")       // Stars: *****
 ```
+

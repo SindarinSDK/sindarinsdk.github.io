@@ -1,8 +1,4 @@
----
-title: UUID
-description: UUID generation and parsing
-permalink: /sdk/core/uuid/
----
+# UUID
 
 Sindarin provides a `UUID` type for generating and manipulating Universally Unique Identifiers. UUIDs are 128-bit values used to identify resources without central coordination.
 
@@ -201,6 +197,6 @@ if id.version() == 7 =>
 
 ## See Also
 
-- [Random](/sdk/core/random/) - Random number generation
-- [Time](/sdk/time/time/) - Time type operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Random](random.md) - Random number generation
+- [Time](../time/time.md) - Time type operations
+- [SDK Overview](../readme.md) - All SDK modules

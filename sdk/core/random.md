@@ -1,8 +1,4 @@
----
-title: Random
-description: Random number generation
-permalink: /sdk/core/random/
----
+# Random Number Generation
 
 Sindarin provides secure random number generation through the `Random` type. By default, all random operations use operating system entropy for cryptographically suitable randomness, with an optional seeded mode for reproducible sequences.
 
@@ -242,5 +238,6 @@ fn main(): void =>
 
 ## See Also
 
-- [UUID](/sdk/core/uuid/) - UUID generation (uses random internally)
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [UUID](uuid.md) - UUID generation (uses random internally)
+- [SDK Overview](../readme.md) - All SDK modules
+- [Arrays](../../arrays.md) - Array operations

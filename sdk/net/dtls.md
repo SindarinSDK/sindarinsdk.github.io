@@ -1,8 +1,4 @@
----
-title: DTLS
-description: DTLS-encrypted UDP connections
-permalink: /sdk/net/dtls/
----
+# DTLS
 
 DTLS (Datagram TLS) provides TLS-level encryption over UDP datagrams. Unlike TLS which operates over TCP streams, DTLS preserves message boundaries — each `send()` corresponds to exactly one `receive()` on the other end. `DtlsListener` provides server-side DTLS with cookie exchange for DoS protection.
 
@@ -240,7 +236,8 @@ export SN_CERTS=server.crt
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [UDP](/sdk/net/udp/) - UDP socket operations
-- [TLS](/sdk/net/tls/) - TLS-encrypted TCP streams
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [UDP](udp.md) - UDP socket operations
+- [TLS](tls.md) - TLS-encrypted TCP streams
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/dtls.sn`

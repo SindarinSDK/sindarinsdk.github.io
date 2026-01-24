@@ -1,8 +1,4 @@
----
-title: C Interop
-description: Native functions, type mapping, and C integration
-permalink: /language/interop/
----
+# C Interoperability in Sindarin
 
 Since Sindarin compiles to C, interoperability is natural but requires explicit declarations for external functions, headers, and linking.
 
@@ -19,8 +15,8 @@ native fn cos(x: double): double
 
 fn main(): int =>
     var angle: double = 3.14159 / 4.0
-    print($"sin(45) = {sin(angle)}\n")
-    print($"cos(45) = {cos(angle)}\n")
+    print($"sin(45°) = {sin(angle)}\n")
+    print($"cos(45°) = {cos(angle)}\n")
     return 0
 ```
 
@@ -66,7 +62,7 @@ extern double sin(double x);
 
 ## Pragma Directives
 
-Pragma statements control compilation behavior for C interop. They use **WYSIWYG (What You See Is What You Get) syntax** -- what you write is exactly what gets emitted.
+Pragma statements control compilation behavior for C interop. They use **WYSIWYG (What You See Is What You Get) syntax** — what you write is exactly what gets emitted.
 
 ### Header Inclusion
 
@@ -111,7 +107,7 @@ The `#pragma source` directive compiles and links additional C source files with
 
 **Path resolution:** Paths are resolved relative to the Sindarin source file's directory.
 
-**Example -- Variadic Printf Wrapper:**
+**Example — Variadic Printf Wrapper:**
 
 ```sindarin
 # test_variadic.sn
@@ -877,7 +873,7 @@ Point create_point(double x, double y) {
 
 **Implications:**
 - Small structs are passed by value efficiently
-- No arena cleanup required -- automatic storage duration
+- No arena cleanup required — automatic storage duration
 - Returned values are copied to the caller's stack frame
 
 ### Context Restriction
@@ -903,8 +899,8 @@ This restriction ensures native structs maintain C-compatible memory layout and 
 
 ## See Also
 
-- [Structs](/language/structs/) - Struct declarations and native struct interop
-- [Memory](/language/memory/) - Arena memory management
-- [Arrays](/language/arrays/) - Array types and byte arrays
-- [Lambdas](/language/lambdas/) - Lambda expressions (regular vs native)
-- [SDK I/O documentation](/sdk/overview/) - File I/O operations
+- [Structs](structs.md) - Struct declarations and native struct interop
+- [Memory](memory.md) - Arena memory management
+- [Arrays](arrays.md) - Array types and byte arrays
+- [Lambdas](lambdas.md) - Lambda expressions (regular vs native)
+- [SDK I/O documentation](sdk/io/readme.md) - File I/O operations

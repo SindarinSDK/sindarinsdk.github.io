@@ -1,8 +1,4 @@
----
-title: JSON
-description: JSON parsing and serialization
-permalink: /sdk/encoding/json/
----
+# JSON
 
 Provides JSON parsing, manipulation, and serialization using the yyjson library. The `Json` type represents any JSON value (object, array, string, number, boolean, or null) and supports both reading and mutation.
 
@@ -223,6 +219,7 @@ fn main(): void =>
 
 ## See Also
 
-- [YAML](/sdk/encoding/yaml/) - YAML parsing and serialization
-- [XML](/sdk/encoding/xml/) - XML parsing and manipulation
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [YAML](yaml.md) - YAML parsing and serialization
+- [XML](xml.md) - XML parsing and manipulation
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/encoding/json.sn`

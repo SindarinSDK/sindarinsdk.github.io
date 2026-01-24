@@ -1,8 +1,4 @@
----
-title: Threading
-description: Concurrency with spawn and sync operators
-permalink: /language/threading/
----
+# Threading in Sindarin
 
 Sindarin provides OS-level threading with minimal syntax for concurrent execution. The `&` operator spawns threads and the `!` operator synchronizes them. Thread safety is enforced at compile time through pending and frozen state tracking.
 
@@ -861,6 +857,6 @@ The following features are fully supported:
 
 ## See Also
 
-- [Memory](/language/memory/) - Arena memory management, `as ref`, `as val`, `shared`, `private`
-- [Arrays](/language/arrays/) - Array operations and frozen semantics
-- [SDK I/O documentation](/sdk/overview/) - File I/O operations
+- [Memory](memory.md) - Arena memory management, `as ref`, `as val`, `shared`, `private`
+- [Arrays](arrays.md) - Array operations and frozen semantics
+- [SDK I/O documentation](sdk/io/readme.md) - File I/O operations

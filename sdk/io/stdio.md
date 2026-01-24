@@ -1,8 +1,4 @@
----
-title: Stdio
-description: Standard input, output, and error streams
-permalink: /sdk/io/stdio/
----
+# Stdio
 
 Provides structured access to standard input, output, and error streams through the `Stdin`, `Stdout`, and `Stderr` types.
 
@@ -121,5 +117,5 @@ fn main(): void =>
 
 ## See Also
 
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [SDK Overview](readme.md) - All SDK modules
 - SDK source: `sdk/stdio.sn`

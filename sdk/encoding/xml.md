@@ -1,8 +1,4 @@
----
-title: XML
-description: XML parsing, XPath, and DOM manipulation
-permalink: /sdk/encoding/xml/
----
+# XML
 
 Provides XML parsing, DOM manipulation, XPath queries, and serialization using libxml2. The `Xml` type represents an XML node (element, document, or text) with full tree navigation and mutation support.
 
@@ -228,6 +224,7 @@ fn main(): void =>
 
 ## See Also
 
-- [JSON](/sdk/encoding/json/) - JSON parsing and serialization
-- [YAML](/sdk/encoding/yaml/) - YAML parsing and serialization
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [JSON](json.md) - JSON parsing and serialization
+- [YAML](yaml.md) - YAML parsing and serialization
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/encoding/xml.sn`

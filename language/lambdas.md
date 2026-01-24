@@ -1,8 +1,4 @@
----
-title: Lambdas
-description: Lambda expressions, closures, and higher-order functions
-permalink: /language/lambdas/
----
+# Lambdas and Closures
 
 Sindarin supports first-class functions through lambdas (anonymous functions) and closures (lambdas that capture variables from their enclosing scope).
 
@@ -238,7 +234,7 @@ var factor: int = 10
 var multiply_shared: fn(int): int = fn(x: int) shared: int => x * factor
 ```
 
-See [Memory](/language/memory/) for details on arena memory management.
+See [Memory](memory.md) for details on arena memory management.
 
 ## Nested Lambdas
 
@@ -272,7 +268,7 @@ print($"operations[0](10, 5) = {operations[0](10, 5)}\n")  // 15
 print($"operations[1](10, 5) = {operations[1](10, 5)}\n")  // 50
 ```
 
-See [Arrays](/language/arrays/) for more on arrays of function types.
+See [Arrays](arrays.md) for more on arrays of function types.
 
 ## Function Type Syntax
 

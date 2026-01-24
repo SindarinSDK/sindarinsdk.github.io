@@ -1,8 +1,4 @@
----
-title: TLS
-description: TLS-encrypted TCP connections
-permalink: /sdk/net/tls/
----
+# TLS
 
 TLS provides encrypted TCP connections using OpenSSL. `TlsStream` wraps a TCP socket with TLS encryption, enabling secure communication with HTTPS servers and other TLS-enabled services. `TlsListener` provides server-side TLS, accepting incoming connections and wrapping them with encryption.
 
@@ -270,7 +266,8 @@ fn main(): void =>
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [TCP](/sdk/net/tcp/) - TCP connection-oriented communication
-- [DTLS](/sdk/net/dtls/) - DTLS-encrypted UDP datagrams
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [TCP](tcp.md) - TCP connection-oriented communication
+- [DTLS](dtls.md) - DTLS-encrypted UDP datagrams
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/tls.sn`

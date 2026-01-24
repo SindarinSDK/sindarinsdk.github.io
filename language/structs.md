@@ -1,8 +1,4 @@
----
-title: Structs
-description: Struct declarations, memory model, and C interop
-permalink: /language/structs/
----
+# Structs in Sindarin
 
 Sindarin supports C-compatible structs for structured data and C library interoperability. Structs enable accessing fields of C library data structures (like zlib's `z_stream`), parsing binary file formats, and organizing related data.
 
@@ -138,7 +134,7 @@ Structs follow the same rules as fixed arrays:
 | Struct Size | Location |
 |-------------|----------|
 | Small (<8KB) | Stack |
-| Large (>=8KB) | Heap (arena-managed) |
+| Large (≥8KB) | Heap (arena-managed) |
 | Escaping scope | Copied to outer arena |
 
 ```sindarin
@@ -203,7 +199,7 @@ fn bad() private: NamedPoint =>
     return p  // COMPILE ERROR: struct contains heap data (str)
 ```
 
-See [Memory](/language/memory/) for more details on arena memory management.
+See [Memory](memory.md) for more details on arena memory management.
 
 ## Operators
 
@@ -383,7 +379,7 @@ native fn example(cfg: *Config): void =>
     var timeout: int = cfg.timeout  // Automatic dereference (like cfg->timeout in C)
 ```
 
-See [C Interop](/language/interop/) for more details on C interoperability.
+See [Interop](interop.md) for more details on C interoperability.
 
 ## Practical Examples
 
@@ -519,6 +515,6 @@ All struct fields are publicly accessible. There are no access modifiers.
 
 ## See Also
 
-- [Memory](/language/memory/) - Arena memory management
-- [C Interop](/language/interop/) - C interoperability
-- [Arrays](/language/arrays/) - Array operations
+- [Memory](memory.md) - Arena memory management
+- [Interop](interop.md) - C interoperability
+- [Arrays](arrays.md) - Array operations

@@ -1,8 +1,4 @@
----
-title: UDP
-description: UDP socket operations
-permalink: /sdk/net/udp/
----
+# UDP
 
 UDP provides connectionless datagram communication using `UdpSocket`.
 
@@ -229,8 +225,9 @@ Note: UDP is connectionless, so `sendTo()` succeeds even if no one is listening.
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [TCP](/sdk/net/tcp/) - TCP connection-oriented communication
-- [TLS](/sdk/net/tls/) - TLS-encrypted TCP streams
-- [DTLS](/sdk/net/dtls/) - DTLS-encrypted UDP datagrams
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [TCP](tcp.md) - TCP connection-oriented communication
+- [TLS](tls.md) - TLS-encrypted TCP streams
+- [DTLS](dtls.md) - DTLS-encrypted UDP datagrams
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/udp.sn`

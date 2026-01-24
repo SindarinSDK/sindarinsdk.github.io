@@ -1,8 +1,4 @@
----
-title: Strings
-description: String interpolation, methods, and multi-line strings
-permalink: /language/strings/
----
+# Strings in Sindarin
 
 Sindarin provides powerful string manipulation with string interpolation, comprehensive methods, and escape sequences.
 
@@ -427,5 +423,5 @@ var sentence: str = parts.join(" and ") // "apple and banana and cherry"
 
 ## See Also
 
-- [Arrays](/language/arrays/) - Array operations including string arrays
-- [SDK I/O documentation](/sdk/overview/) - File I/O for reading and writing text files
+- [Arrays](arrays.md) - Array operations including string arrays
+- [SDK I/O documentation](sdk/io/readme.md) - File I/O for reading and writing text files

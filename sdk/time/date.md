@@ -1,8 +1,4 @@
----
-title: Date
-description: Calendar date operations
-permalink: /sdk/time/date/
----
+# Date in Sindarin
 
 The built-in `Date` type has been deprecated. Please use the SDK-based `Date` type instead.
 
@@ -61,5 +57,6 @@ Instance methods:
 
 ## See Also
 
-- [Time](/sdk/time/time/) - Time operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Time](time.md) - Time operations
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/time/date.sn`

@@ -1,8 +1,4 @@
----
-title: SSH
-description: SSH client and server connections
-permalink: /sdk/net/ssh/
----
+# SSH
 
 SSH provides secure remote command execution and interactive shell access using libssh with OpenSSL. Sindarin's SSH module supports both client connections (with multiple authentication methods) and server listeners for building SSH services.
 
@@ -325,6 +321,7 @@ fn main(): void =>
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [TLS](/sdk/net/tls/) - TLS-encrypted TCP streams
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [TLS](tls.md) - TLS-encrypted TCP streams
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/ssh.sn`

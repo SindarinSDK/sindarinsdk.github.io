@@ -1,8 +1,4 @@
----
-title: YAML
-description: YAML parsing and serialization
-permalink: /sdk/encoding/yaml/
----
+# YAML
 
 Provides YAML parsing, manipulation, and serialization using libyaml. The `Yaml` type represents a YAML node (scalar, sequence, or mapping) with full mutation support.
 
@@ -218,6 +214,7 @@ fn main(): void =>
 
 ## See Also
 
-- [JSON](/sdk/encoding/json/) - JSON parsing and serialization
-- [XML](/sdk/encoding/xml/) - XML parsing and manipulation
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [JSON](json.md) - JSON parsing and serialization
+- [XML](xml.md) - XML parsing and manipulation
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/encoding/yaml.sn`

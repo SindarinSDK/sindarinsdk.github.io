@@ -1,8 +1,4 @@
----
-title: Crypto
-description: Hashing, encryption, HMAC, and key derivation
-permalink: /sdk/crypto/crypto/
----
+# Crypto
 
 Provides cryptographic operations using OpenSSL's libcrypto: hashing, HMAC, AES-256-GCM encryption, PBKDF2 key derivation, secure random, and timing-safe comparison.
 
@@ -273,7 +269,8 @@ fn decryptMessage(password: str, data: byte[]): byte[] =>
 
 ## See Also
 
-- [Random](/sdk/core/random/) - General-purpose random number generation
-- [Bytes](/sdk/io/bytes/) - Hex and Base64 encoding
-- [TLS](/sdk/net/tls/) - TLS-encrypted network connections
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Random](../core/random.md) - General-purpose random number generation
+- [I/O Bytes](../io/bytes.md) - Hex and Base64 encoding
+- [Net TLS](../net/tls.md) - TLS-encrypted network connections
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/crypto/crypto.sn`

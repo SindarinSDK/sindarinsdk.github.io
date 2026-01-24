@@ -1,8 +1,4 @@
----
-title: Bytes
-description: Byte encoding and decoding
-permalink: /sdk/io/bytes/
----
+# Bytes
 
 The `byte` primitive type and `Bytes` utility class for binary data encoding and decoding.
 
@@ -156,7 +152,7 @@ if header.length >= 4 =>
 
 ## See Also
 
-- [I/O Overview](/sdk/io/) - File I/O concepts and shared patterns
-- [BinaryFile](/sdk/io/binaryfile/) - Binary file operations
-- [TextFile](/sdk/io/textfile/) - Text file operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [I/O Overview](readme.md) - File I/O concepts and shared patterns
+- [BinaryFile](binaryfile.md) - Binary file operations
+- [TextFile](textfile.md) - Text file operations
+- [SDK Overview](../readme.md) - All SDK modules

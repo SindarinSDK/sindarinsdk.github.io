@@ -1,8 +1,4 @@
----
-title: Networking
-description: TCP, UDP, TLS, DTLS, SSH, QUIC, and Git
-permalink: /sdk/net/
----
+# Network I/O in Sindarin
 
 Sindarin provides TCP, UDP, TLS, DTLS, SSH, QUIC, and Git types through the SDK for network communication. All network types integrate with Sindarin's arena-based memory management and threading model.
 
@@ -10,13 +6,13 @@ Sindarin provides TCP, UDP, TLS, DTLS, SSH, QUIC, and Git types through the SDK 
 
 | Module | Description |
 |--------|-------------|
-| [TCP](/sdk/net/tcp/) | TCP listener and stream for connection-oriented communication |
-| [UDP](/sdk/net/udp/) | UDP socket for connectionless datagram communication |
-| [TLS](/sdk/net/tls/) | TLS-encrypted TCP streams and listener (HTTPS, secure connections) |
-| [DTLS](/sdk/net/dtls/) | DTLS-encrypted UDP datagrams and listener (secure datagram communication) |
-| [SSH](/sdk/net/ssh/) | SSH client and server for secure remote command execution |
-| [QUIC](/sdk/net/quic/) | QUIC multiplexed encrypted streams over UDP |
-| [Git](/sdk/net/git/) | Git repository operations (clone, commit, branch, push/pull) |
+| [TCP](tcp.md) | TCP listener and stream for connection-oriented communication |
+| [UDP](udp.md) | UDP socket for connectionless datagram communication |
+| [TLS](tls.md) | TLS-encrypted TCP streams and listener (HTTPS, secure connections) |
+| [DTLS](dtls.md) | DTLS-encrypted UDP datagrams and listener (secure datagram communication) |
+| [SSH](ssh.md) | SSH client and server for secure remote command execution |
+| [QUIC](quic.md) | QUIC multiplexed encrypted streams over UDP |
+| [Git](git.md) | Git repository operations (clone, commit, branch, push/pull) |
 
 ## Quick Start
 
@@ -221,4 +217,6 @@ var conn: TcpStream = TcpStream.connect("example.com:80")
 
 ## See Also
 
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [SDK Overview](../readme.md) - All SDK modules
+- [Threading](../../threading.md) - Threading model (`&` spawn, `!` sync)
+- [Memory](../../memory.md) - Arena memory management

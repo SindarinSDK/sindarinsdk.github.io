@@ -1,8 +1,4 @@
----
-title: Memory
-description: Arena-based memory management and ownership
-permalink: /language/memory/
----
+# Sindarin Memory Management
 
 ## First Principles
 
@@ -217,7 +213,6 @@ var m: int[][] = build_matrix()        // All nested arrays live in caller's are
 
 ### Assignment Semantics
 
-{% raw %}
 ```sindarin
 var a: int[][] = {{1, 2}, {3, 4}}
 var b: int[][] = a                    // b references same outer array
@@ -229,7 +224,6 @@ b[0][0] = 5                           // a[0][0] is now 5
 var c: int[][] = a.clone()            // c is independent
 c[0][0] = 100                         // a[0][0] unchanged
 ```
-{% endraw %}
 
 ---
 
@@ -313,10 +307,10 @@ fn find_longest(items: str[]): str =>
 
 ```
 Caller's Arena
-  +-- Function Arena
-        |-- allocations (data, longest)
-        +-- Loop Arena (per iteration)
-              +-- allocations (temp, upper) - freed each iteration
+  └── Function Arena
+        ├── allocations (data, longest)
+        └── Loop Arena (per iteration)
+              └── allocations (temp, upper) - freed each iteration
 ```
 
 ---
@@ -887,6 +881,6 @@ var cache: str = ""
 
 ## See Also
 
-- [Arrays](/language/arrays/) - Array operations and memory behavior
-- [Structs](/language/structs/) - Struct memory model and escape behavior
-- [C Interop](/language/interop/) - C interoperability and native memory
+- [Arrays](arrays.md) - Array operations and memory behavior
+- [Structs](structs.md) - Struct memory model and escape behavior
+- [Interop](interop.md) - C interoperability and native memory

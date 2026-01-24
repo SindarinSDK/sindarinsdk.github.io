@@ -1,8 +1,4 @@
----
-title: BinaryFile
-description: Binary file operations
-permalink: /sdk/io/binaryfile/
----
+# BinaryFile
 
 `BinaryFile` is used for reading and writing raw bytes.
 
@@ -226,8 +222,8 @@ else =>
 
 ## See Also
 
-- [I/O Overview](/sdk/io/) - File I/O concepts and shared patterns
-- [TextFile](/sdk/io/textfile/) - Text file operations
-- [Bytes](/sdk/io/bytes/) - Byte encoding/decoding utilities
-- [Path](/sdk/io/path/) - Path manipulation utilities
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [I/O Overview](readme.md) - File I/O concepts and shared patterns
+- [TextFile](textfile.md) - Text file operations
+- [Bytes](bytes.md) - Byte encoding/decoding utilities
+- [Path](path.md) - Path manipulation utilities
+- [SDK Overview](../readme.md) - All SDK modules

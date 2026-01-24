@@ -1,8 +1,4 @@
----
-title: Path
-description: Path utilities and manipulation
-permalink: /sdk/io/path/
----
+# Path
 
 Static methods for path manipulation and file system queries.
 
@@ -158,8 +154,8 @@ fn processPath(path: str): void =>
 
 ## See Also
 
-- [I/O Overview](/sdk/io/) - File I/O concepts and shared patterns
-- [Directory](/sdk/io/directory/) - Directory operations
-- [TextFile](/sdk/io/textfile/) - Text file operations
-- [BinaryFile](/sdk/io/binaryfile/) - Binary file operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [I/O Overview](readme.md) - File I/O concepts and shared patterns
+- [Directory](directory.md) - Directory operations
+- [TextFile](textfile.md) - Text file operations
+- [BinaryFile](binaryfile.md) - Binary file operations
+- [SDK Overview](../readme.md) - All SDK modules

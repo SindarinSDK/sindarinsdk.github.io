@@ -1,8 +1,4 @@
----
-title: Time
-description: Time and duration operations
-permalink: /sdk/time/time/
----
+# Time in Sindarin
 
 The built-in `Time` type has been deprecated. Please use the SDK-based `Time` type instead.
 
@@ -59,5 +55,6 @@ Instance methods:
 
 ## See Also
 
-- [Date](/sdk/time/date/) - Calendar date operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Date](date.md) - Calendar date operations
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/time/time.sn`

@@ -1,8 +1,4 @@
----
-title: Arrays
-description: Array operations, slicing, and built-in methods
-permalink: /language/arrays/
----
+# Arrays in Sindarin
 
 Sindarin provides powerful array support with type-safe operations, slicing, and modern syntax features like range literals and spread operators.
 

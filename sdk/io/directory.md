@@ -1,8 +1,4 @@
----
-title: Directory
-description: Directory operations
-permalink: /sdk/io/directory/
----
+# Directory
 
 Static methods for directory operations.
 
@@ -162,8 +158,8 @@ else =>
 
 ## See Also
 
-- [I/O Overview](/sdk/io/) - File I/O concepts and shared patterns
-- [Path](/sdk/io/path/) - Path manipulation utilities
-- [TextFile](/sdk/io/textfile/) - Text file operations
-- [BinaryFile](/sdk/io/binaryfile/) - Binary file operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [I/O Overview](readme.md) - File I/O concepts and shared patterns
+- [Path](path.md) - Path manipulation utilities
+- [TextFile](textfile.md) - Text file operations
+- [BinaryFile](binaryfile.md) - Binary file operations
+- [SDK Overview](../readme.md) - All SDK modules

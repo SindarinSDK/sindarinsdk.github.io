@@ -1,8 +1,4 @@
----
-title: Math
-description: Mathematical functions and constants
-permalink: /sdk/core/math/
----
+# Math
 
 Provides C math library bindings, mathematical constants, and helper functions for both `double` and `float` precision arithmetic.
 
@@ -259,4 +255,5 @@ fn main(): void =>
 
 ## See Also
 
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/core/math.sn`

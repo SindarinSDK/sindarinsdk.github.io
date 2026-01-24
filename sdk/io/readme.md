@@ -1,8 +1,4 @@
----
-title: File I/O
-description: TextFile, BinaryFile, Path, Directory, and Bytes
-permalink: /sdk/io/
----
+# File I/O in Sindarin
 
 Sindarin provides comprehensive file I/O capabilities through the SDK. This document provides an overview of the available types and shared concepts.
 
@@ -10,11 +6,11 @@ Sindarin provides comprehensive file I/O capabilities through the SDK. This docu
 
 | Module | Description |
 |--------|-------------|
-| [TextFile](/sdk/io/textfile/) | Text-based file operations with string values |
-| [BinaryFile](/sdk/io/binaryfile/) | Raw byte file operations |
-| [Bytes](/sdk/io/bytes/) | Byte encoding/decoding (hex, base64) |
-| [Path](/sdk/io/path/) | Path manipulation utilities |
-| [Directory](/sdk/io/directory/) | Directory operations |
+| [TextFile](textfile.md) | Text-based file operations with string values |
+| [BinaryFile](binaryfile.md) | Raw byte file operations |
+| [Bytes](bytes.md) | Byte encoding/decoding (hex, base64) |
+| [Path](path.md) | Path manipulation utilities |
+| [Directory](directory.md) | Directory operations |
 
 ## Quick Start
 
@@ -295,4 +291,7 @@ fn main(): int =>
 
 ## See Also
 
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [SDK Overview](../readme.md) - All SDK modules
+- [Threading](../../threading.md) - Threading model (`&` spawn, `!` sync)
+- [Memory](../../memory.md) - Arena memory management details
+- [Arrays](../../arrays.md) - Array operations including byte arrays

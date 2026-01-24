@@ -1,8 +1,4 @@
----
-title: TCP
-description: TCP client and server operations
-permalink: /sdk/net/tcp/
----
+# TCP
 
 TCP provides connection-oriented, reliable communication using `TcpListener` for servers and `TcpStream` for connections.
 
@@ -288,8 +284,9 @@ var conn: TcpStream = TcpStream.connect("example.com:80")
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [UDP](/sdk/net/udp/) - UDP socket operations
-- [TLS](/sdk/net/tls/) - TLS-encrypted TCP streams
-- [DTLS](/sdk/net/dtls/) - DTLS-encrypted UDP datagrams
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [UDP](udp.md) - UDP socket operations
+- [TLS](tls.md) - TLS-encrypted TCP streams
+- [DTLS](dtls.md) - DTLS-encrypted UDP datagrams
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/tcp.sn`

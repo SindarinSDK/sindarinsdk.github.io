@@ -1,8 +1,4 @@
----
-title: Git
-description: Git repository operations
-permalink: /sdk/net/git/
----
+# Git
 
 Git provides local and remote repository operations using libgit2. Sindarin's Git module supports repository initialization, cloning, staging, committing, branching, tagging, diffing, and network operations (fetch, push, pull) with SSH and HTTPS authentication.
 
@@ -550,6 +546,7 @@ fn main(): void =>
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [SSH](/sdk/net/ssh/) - SSH secure connections
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [SSH](ssh.md) - SSH secure connections
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/git.sn`

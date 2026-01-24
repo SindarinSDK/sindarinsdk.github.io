@@ -1,8 +1,4 @@
----
-title: TextFile
-description: Text file reading and writing operations
-permalink: /sdk/io/textfile/
----
+# TextFile
 
 `TextFile` is used for reading and writing text content. It works with `str` values.
 
@@ -369,8 +365,8 @@ Examples of panic conditions:
 
 ## See Also
 
-- [I/O Overview](/sdk/io/) - File I/O concepts and shared patterns
-- [BinaryFile](/sdk/io/binaryfile/) - Binary file operations
-- [Path](/sdk/io/path/) - Path manipulation utilities
-- [Directory](/sdk/io/directory/) - Directory operations
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [I/O Overview](readme.md) - File I/O concepts and shared patterns
+- [BinaryFile](binaryfile.md) - Binary file operations
+- [Path](path.md) - Path manipulation utilities
+- [Directory](directory.md) - Directory operations
+- [SDK Overview](../readme.md) - All SDK modules

@@ -1,8 +1,4 @@
----
-title: QUIC
-description: QUIC protocol connections and streams
-permalink: /sdk/net/quic/
----
+# QUIC
 
 QUIC provides multiplexed, encrypted transport over UDP with low-latency connection establishment. Built on ngtcp2 with OpenSSL, QUIC offers TLS 1.3 encryption, stream multiplexing without head-of-line blocking, and connection migration.
 
@@ -348,7 +344,8 @@ fn main(): void =>
 
 ## See Also
 
-- [Net Overview](/sdk/net/) - Network I/O concepts
-- [TLS](/sdk/net/tls/) - TLS-encrypted TCP streams
-- [DTLS](/sdk/net/dtls/) - DTLS-encrypted UDP datagrams
-- [SDK Overview](/sdk/overview/) - All SDK modules
+- [Net Overview](readme.md) - Network I/O concepts
+- [TLS](tls.md) - TLS-encrypted TCP streams
+- [DTLS](dtls.md) - DTLS-encrypted UDP datagrams
+- [SDK Overview](../readme.md) - All SDK modules
+- SDK source: `sdk/net/quic.sn`
