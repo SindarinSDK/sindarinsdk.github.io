@@ -1,4 +1,8 @@
-# C Interoperability in Sindarin
+---
+title: "C Interop"
+description: "Calling C code and native function bindings"
+permalink: /language/interop/
+---
 
 Since Sindarin compiles to C, interoperability is natural but requires explicit declarations for external functions, headers, and linking.
 
