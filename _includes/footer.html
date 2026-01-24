@@ -17,33 +17,67 @@ document.querySelectorAll('.nav-link, .nav-sublink').forEach(function(link) {
 
 // Sindarin syntax highlighting
 (function() {
-  var keywords = /\b(fn|var|if|else|while|for|in|return|import|native|struct|match|private|shared|print|println|true|false|void|as|ref|val|sync|lock|spawn|use|pragma|include|link|source|packed|break|continue|each|sizeof|new|from|to|step|else)\b/g;
-  var types = /\b(int|str|double|bool|byte|char|long|void|int\[\]|str\[\]|double\[\]|bool\[\]|byte\[\]|char\[\])\b/g;
-  var builtins = /\b(TextFile|BinaryFile|Path|Directory|Bytes|Date|Time|Process|Environment|Random|UUID|TcpStream|TcpListener|UdpSocket|Crypto|JSON|XML|YAML|ZLib|Stdio|Math)\b/g;
+  var kwSet = {fn:1,var:1,if:1,else:1,while:1,for:1,in:1,return:1,import:1,native:1,struct:1,match:1,private:1,shared:1,print:1,println:1,true:1,false:1,as:1,ref:1,val:1,sync:1,lock:1,spawn:1,use:1,packed:1,break:1,continue:1,each:1,sizeof:1,new:1,from:1,to:1,step:1,type:1,opaque:1,enum:1};
+  var typeSet = {int:1,str:1,double:1,bool:1,byte:1,char:1,long:1,float:1,uint:1,int32:1,uint32:1,void:1};
+  var builtinSet = {TextFile:1,BinaryFile:1,Path:1,Directory:1,Bytes:1,Date:1,Time:1,Process:1,Environment:1,Random:1,UUID:1,TcpStream:1,TcpListener:1,UdpSocket:1,Crypto:1,JSON:1,XML:1,YAML:1,ZLib:1,Stdio:1,Math:1};
+  var TOKEN = /\b([a-zA-Z_]\w*(?:\[\])?)\b|\b(\d+\.?\d*)\b|(=&gt;)/g;
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/\x3c/g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlightCode(s) {
+    s = esc(s);
+    return s.replace(TOKEN, function(m, word, num, arrow) {
+      if (arrow) return '<span class="sn-operator">=&gt;<\/span>';
+      if (num) return '<span class="sn-number">' + num + '<\/span>';
+      if (word) {
+        var base = word.replace('[]', '');
+        var suffix = word.indexOf('[]') >= 0 ? '[]' : '';
+        if (builtinSet[base]) return '<span class="sn-type">' + word + '<\/span>';
+        if (typeSet[base]) return '<span class="sn-type">' + word + '<\/span>';
+        if (kwSet[word]) return '<span class="sn-keyword">' + word + '<\/span>';
+      }
+      return m;
+    });
+  }
 
   var blocks = document.querySelectorAll('code.language-sindarin');
   blocks.forEach(function(block) {
-    var html = block.textContent;
-    // Escape HTML
-    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    // Comments (must be first to avoid highlighting inside comments)
-    html = html.replace(/(\/\/.*$)/gm, '<span class="sn-comment">$1</span>');
-    // Strings (interpolated and regular)
-    html = html.replace(/(\$?"[^"]*")/g, '<span class="sn-string">$1</span>');
-    // Char literals
-    html = html.replace(/('[^']*')/g, '<span class="sn-string">$1</span>');
-    // Numbers
-    html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="sn-number">$1</span>');
-    // Built-in types/classes
-    html = html.replace(builtins, '<span class="sn-type">$1</span>');
-    // Primitive types
-    html = html.replace(types, '<span class="sn-type">$1</span>');
-    // Keywords
-    html = html.replace(keywords, '<span class="sn-keyword">$1</span>');
-    // Arrow operator
-    html = html.replace(/=&gt;/g, '<span class="sn-operator">=&gt;</span>');
-
-    block.innerHTML = html;
+    var lines = block.textContent.split('\n');
+    var result = [];
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      // Pragma/comment lines starting with #
+      if (/^\s*#/.test(line)) {
+        result.push('<span class="sn-keyword">' + esc(line) + '<\/span>');
+        continue;
+      }
+      // Split line at // comment (not inside a string)
+      var inStr = false, commentIdx = -1;
+      for (var j = 0; j < line.length; j++) {
+        if (line[j] === '"' && (j === 0 || line[j-1] !== '\\')) inStr = !inStr;
+        if (!inStr && line[j] === '/' && line[j+1] === '/') { commentIdx = j; break; }
+      }
+      var code = commentIdx >= 0 ? line.slice(0, commentIdx) : line;
+      var comment = commentIdx >= 0 ? line.slice(commentIdx) : '';
+      // Split code at string literals and highlight non-string parts
+      var parts = code.split(/(\$?"[^"]*")/g);
+      var highlighted = '';
+      for (var k = 0; k < parts.length; k++) {
+        var p = parts[k];
+        if (p && (p[0] === '"' || (p[0] === '$' && p[1] === '"'))) {
+          highlighted += '<span class="sn-string">' + esc(p) + '<\/span>';
+        } else {
+          highlighted += highlightCode(p);
+        }
+      }
+      if (comment) {
+        highlighted += '<span class="sn-comment">' + esc(comment) + '<\/span>';
+      }
+      result.push(highlighted);
+    }
+    block.innerHTML = result.join('\n');
   });
 })();
 </script>
