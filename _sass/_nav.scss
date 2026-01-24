@@ -1,0 +1,166 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $sidebar-width;
+  height: 100vh;
+  background: $bg-card;
+  border-right: 1px solid $border-color;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid $border-color;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $text-primary;
+  }
+}
+
+.sidebar-content {
+  flex: 1;
+  padding: 10px 0;
+  overflow-y: auto;
+}
+
+.nav-section {
+  margin-bottom: 20px;
+}
+
+.nav-section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: $text-secondary;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  &.active > .nav-link {
+    background: $primary-green-dark;
+    color: $gold;
+  }
+}
+
+.nav-link {
+  display: block;
+  padding: 8px 20px;
+  color: $text-primary;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 6px;
+  margin: 0 8px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $primary-green-dark;
+    color: $gold-light;
+    text-decoration: none;
+  }
+}
+
+.nav-sublist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+
+  &.expanded {
+    display: block;
+  }
+}
+
+.nav-subitem {
+  &.active > .nav-sublink {
+    color: $gold;
+  }
+}
+
+.nav-sublink {
+  display: block;
+  padding: 5px 20px 5px 36px;
+  color: $text-secondary;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $gold-light;
+    text-decoration: none;
+  }
+}
+
+.sidebar-footer {
+  padding: 15px 20px;
+  border-top: 1px solid $border-color;
+
+  .github-link {
+    color: $text-secondary;
+    font-size: 0.85rem;
+    text-decoration: none;
+    &:hover {
+      color: $gold;
+    }
+  }
+}
+
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 200;
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: $text-primary;
+    margin: 4px 0;
+    transition: all 0.3s;
+  }
+
+  &.active span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 4px);
+  }
+  &.active span:nth-child(2) {
+    opacity: 0;
+  }
+  &.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -4px);
+  }
+}

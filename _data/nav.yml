@@ -1,0 +1,107 @@
+- title: Getting Started
+  items:
+    - title: Overview
+      url: /language/overview/
+    - title: Quick Start
+      url: /language/quick-start/
+    - title: Building
+      url: /language/building/
+
+- title: Language Guide
+  items:
+    - title: Strings
+      url: /language/strings/
+    - title: Arrays
+      url: /language/arrays/
+    - title: Structs
+      url: /language/structs/
+    - title: Match
+      url: /language/match/
+    - title: Lambdas
+      url: /language/lambdas/
+    - title: Memory
+      url: /language/memory/
+
+- title: Advanced
+  items:
+    - title: Threading
+      url: /language/threading/
+    - title: C Interop
+      url: /language/interop/
+    - title: Interceptors
+      url: /language/interceptors/
+    - title: Namespaces
+      url: /language/namespaces/
+
+- title: SDK Reference
+  items:
+    - title: Overview
+      url: /sdk/overview/
+    - title: IO
+      url: /sdk/io/
+      subitems:
+        - title: TextFile
+          url: /sdk/io/textfile/
+        - title: BinaryFile
+          url: /sdk/io/binaryfile/
+        - title: Path
+          url: /sdk/io/path/
+        - title: Directory
+          url: /sdk/io/directory/
+        - title: Bytes
+          url: /sdk/io/bytes/
+        - title: Stdio
+          url: /sdk/io/stdio/
+    - title: Net
+      url: /sdk/net/
+      subitems:
+        - title: TCP
+          url: /sdk/net/tcp/
+        - title: UDP
+          url: /sdk/net/udp/
+        - title: TLS
+          url: /sdk/net/tls/
+        - title: DTLS
+          url: /sdk/net/dtls/
+        - title: SSH
+          url: /sdk/net/ssh/
+        - title: QUIC
+          url: /sdk/net/quic/
+        - title: Git
+          url: /sdk/net/git/
+    - title: Crypto
+      url: /sdk/crypto/crypto/
+    - title: Encoding
+      url: /sdk/encoding/json/
+      subitems:
+        - title: JSON
+          url: /sdk/encoding/json/
+        - title: XML
+          url: /sdk/encoding/xml/
+        - title: YAML
+          url: /sdk/encoding/yaml/
+        - title: ZLib
+          url: /sdk/encoding/zlib/
+    - title: OS
+      url: /sdk/os/env/
+      subitems:
+        - title: Environment
+          url: /sdk/os/env/
+        - title: Process
+          url: /sdk/os/process/
+    - title: Time
+      url: /sdk/time/date/
+      subitems:
+        - title: Date
+          url: /sdk/time/date/
+        - title: Time
+          url: /sdk/time/time/
+    - title: Core
+      url: /sdk/core/math/
+      subitems:
+        - title: Math
+          url: /sdk/core/math/
+        - title: Random
+          url: /sdk/core/random/
+        - title: UUID
+          url: /sdk/core/uuid/

@@ -1,0 +1,43 @@
+{% assign all_pages = "" | split: "" %}
+{% for section in site.data.nav %}
+  {% for item in section.items %}
+    {% assign all_pages = all_pages | push: item %}
+    {% if item.subitems %}
+      {% for subitem in item.subitems %}
+        {% assign all_pages = all_pages | push: subitem %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% assign current_index = -1 %}
+{% for p in all_pages %}
+  {% if p.url == page.url %}
+    {% assign current_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% if current_index >= 0 %}
+<nav class="page-navigation">
+  {% assign prev_index = current_index | minus: 1 %}
+  {% assign next_index = current_index | plus: 1 %}
+
+  {% if prev_index >= 0 %}
+    {% assign prev_page = all_pages[prev_index] %}
+    <a href="{{ prev_page.url | relative_url }}" class="page-nav-prev">
+      <span class="page-nav-label">Previous</span>
+      <span class="page-nav-title">{{ prev_page.title }}</span>
+    </a>
+  {% else %}
+    <span></span>
+  {% endif %}
+
+  {% if next_index < all_pages.size %}
+    {% assign next_page = all_pages[next_index] %}
+    <a href="{{ next_page.url | relative_url }}" class="page-nav-next">
+      <span class="page-nav-label">Next</span>
+      <span class="page-nav-title">{{ next_page.title }}</span>
+    </a>
+  {% endif %}
+</nav>
+{% endif %}

@@ -1,0 +1,49 @@
+<script>
+// Sidebar toggle for mobile
+document.getElementById('sidebar-toggle').addEventListener('click', function() {
+  document.getElementById('sidebar').classList.toggle('open');
+  this.classList.toggle('active');
+});
+
+// Close sidebar when clicking a link on mobile
+document.querySelectorAll('.nav-link, .nav-sublink').forEach(function(link) {
+  link.addEventListener('click', function() {
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebar-toggle').classList.remove('active');
+    }
+  });
+});
+
+// Sindarin syntax highlighting
+(function() {
+  var keywords = /\b(fn|var|if|else|while|for|in|return|import|native|struct|match|private|shared|print|println|true|false|void|as|ref|val|sync|lock|spawn|use|pragma|include|link|source|packed|break|continue|each|sizeof|new|from|to|step|else)\b/g;
+  var types = /\b(int|str|double|bool|byte|char|long|void|int\[\]|str\[\]|double\[\]|bool\[\]|byte\[\]|char\[\])\b/g;
+  var builtins = /\b(TextFile|BinaryFile|Path|Directory|Bytes|Date|Time|Process|Environment|Random|UUID|TcpStream|TcpListener|UdpSocket|Crypto|JSON|XML|YAML|ZLib|Stdio|Math)\b/g;
+
+  var blocks = document.querySelectorAll('code.language-sindarin');
+  blocks.forEach(function(block) {
+    var html = block.textContent;
+    // Escape HTML
+    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // Comments (must be first to avoid highlighting inside comments)
+    html = html.replace(/(\/\/.*$)/gm, '<span class="sn-comment">$1</span>');
+    // Strings (interpolated and regular)
+    html = html.replace(/(\$?"[^"]*")/g, '<span class="sn-string">$1</span>');
+    // Char literals
+    html = html.replace(/('[^']*')/g, '<span class="sn-string">$1</span>');
+    // Numbers
+    html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="sn-number">$1</span>');
+    // Built-in types/classes
+    html = html.replace(builtins, '<span class="sn-type">$1</span>');
+    // Primitive types
+    html = html.replace(types, '<span class="sn-type">$1</span>');
+    // Keywords
+    html = html.replace(keywords, '<span class="sn-keyword">$1</span>');
+    // Arrow operator
+    html = html.replace(/=&gt;/g, '<span class="sn-operator">=&gt;</span>');
+
+    block.innerHTML = html;
+  });
+})();
+</script>
