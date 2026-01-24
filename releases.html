@@ -1,0 +1,130 @@
+---
+title: Releases
+description: Sindarin compiler releases and changelog
+permalink: /releases/
+layout: default
+---
+
+<article class="page-content">
+  <header class="page-header">
+    <h1>Releases</h1>
+    <p class="page-description">Sindarin compiler releases from GitHub</p>
+  </header>
+
+  <div class="page-body">
+    <div id="releases-loading" class="releases-loading">Loading releases...</div>
+    <div id="releases-error" class="releases-error" style="display:none"></div>
+    <div id="releases-list" class="releases-list"></div>
+  </div>
+</article>
+
+<style>
+.releases-loading { color: #a0b0a8; padding: 40px 0; text-align: center; }
+.releases-error { color: #e57373; padding: 20px; background: rgba(229,115,115,.1); border-radius: 8px; margin: 20px 0; }
+.release-card { border: 1px solid #1e2d26; border-radius: 10px; padding: 25px; margin-bottom: 20px; background: #111916; transition: border-color .2s; }
+.release-card:hover { border-color: #1b5e40; }
+.release-header { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; flex-wrap: wrap; }
+.release-tag { font-size: 1.4rem; font-weight: 700; color: #c9a227; text-decoration: none; }
+.release-tag:hover { color: #e8d48b; }
+.release-badge { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+.release-latest { background: #1b5e40; color: #fff; }
+.release-prerelease { background: #c9a227; color: #0a0f0d; }
+.release-date { font-size: .85rem; color: #a0b0a8; margin-bottom: 15px; }
+.release-body { color: #a0b0a8; line-height: 1.6; margin-bottom: 15px; }
+.release-body h1, .release-body h2, .release-body h3 { font-size: 1.1rem; color: #e8efe9; margin: 15px 0 8px; }
+.release-body ul { padding-left: 20px; margin: 8px 0; }
+.release-body li { margin-bottom: 4px; }
+.release-body code { background: #0d1210; color: #e8d48b; padding: 1px 5px; border-radius: 3px; font-size: .85rem; }
+.release-body p { margin-bottom: 10px; }
+.release-assets { border-top: 1px solid #1e2d26; padding-top: 12px; }
+.release-assets-title { font-size: .8rem; color: #a0b0a8; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.release-asset { display: inline-block; padding: 6px 14px; background: #0d3b2a; border: 1px solid #1b5e40; border-radius: 6px; color: #e8efe9; text-decoration: none; font-size: .85rem; margin: 4px 4px 4px 0; transition: background .2s; }
+.release-asset:hover { background: #1b5e40; text-decoration: none; }
+.release-asset-size { color: #a0b0a8; font-size: .75rem; margin-left: 6px; }
+</style>
+
+<script>
+(function() {
+  var listEl = document.getElementById('releases-list');
+  var loadingEl = document.getElementById('releases-loading');
+  var errorEl = document.getElementById('releases-error');
+
+  fetch('https://api.github.com/repos/SindarinSDK/sindarin-compiler/releases')
+    .then(function(res) {
+      if (!res.ok) throw new Error('GitHub API returned ' + res.status);
+      return res.json();
+    })
+    .then(function(releases) {
+      loadingEl.style.display = 'none';
+      if (releases.length === 0) {
+        listEl.innerHTML = '<p style="color:#a0b0a8">No releases yet.</p>';
+        return;
+      }
+      var html = '';
+      releases.forEach(function(rel, idx) {
+        html += '<div class="release-card">';
+        html += '<div class="release-header">';
+        html += '<a href="' + rel.html_url + '" class="release-tag">' + escHtml(rel.tag_name) + '</a>';
+        if (idx === 0 && !rel.prerelease) html += '<span class="release-badge release-latest">Latest</span>';
+        if (rel.prerelease) html += '<span class="release-badge release-prerelease">Pre-release</span>';
+        html += '</div>';
+        var date = new Date(rel.published_at);
+        html += '<div class="release-date">' + date.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) + '</div>';
+        if (rel.body) {
+          html += '<div class="release-body">' + renderMarkdown(rel.body) + '</div>';
+        }
+        if (rel.assets && rel.assets.length > 0) {
+          html += '<div class="release-assets">';
+          html += '<div class="release-assets-title">Downloads</div>';
+          rel.assets.forEach(function(asset) {
+            html += '<a href="' + asset.browser_download_url + '" class="release-asset">';
+            html += escHtml(asset.name);
+            html += '<span class="release-asset-size">' + formatSize(asset.size) + '</span>';
+            html += '</a>';
+          });
+          html += '</div>';
+        }
+        html += '</div>';
+      });
+      listEl.innerHTML = html;
+    })
+    .catch(function(err) {
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'block';
+      errorEl.textContent = 'Failed to load releases: ' + err.message;
+    });
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function renderMarkdown(text) {
+    var html = escHtml(text);
+    // Headers
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    // Bold
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Inline code
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Unordered lists
+    html = html.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>(\n|$))+/g, '<ul>$&</ul>');
+    // Line breaks into paragraphs
+    html = html.replace(/\n\n/g, '</p><p>');
+    html = '<p>' + html + '</p>';
+    // Clean up empty paragraphs
+    html = html.replace(/<p>\s*<\/p>/g, '');
+    return html;
+  }
+})();
+</script>

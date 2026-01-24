@@ -6,6 +6,8 @@
       url: /language/quick-start/
     - title: Building
       url: /language/building/
+    - title: Releases
+      url: /releases/
 
 - title: Language Guide
   items:
