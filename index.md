@@ -16,6 +16,24 @@ permalink: /
 
 <div class="section" markdown="1">
 
+## Quick Installation
+
+**macOS / Linux:**
+```bash
+curl -sSf https://raw.githubusercontent.com/SindarinSDK/sindarin-compiler/main/scripts/install.sh | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/SindarinSDK/sindarin-compiler/main/scripts/install.ps1 | iex
+```
+
+For manual installation or building from source, see the [Building Guide](/language/building/).
+
+</div>
+
+<div class="section" markdown="1">
+
 ## How It Works
 
 <div class="pipeline">
