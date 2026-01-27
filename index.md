@@ -14,7 +14,7 @@ permalink: /
   </div>
 </div>
 
-<div class="section">
+<div class="section" markdown="1">
 
 ## How It Works
 
@@ -41,7 +41,7 @@ fn main(): void =>
 
 </div>
 
-<div class="section">
+<div class="section" markdown="1">
 
 ## Features
 
@@ -74,7 +74,7 @@ fn main(): void =>
 
 </div>
 
-<div class="section">
+<div class="section" markdown="1">
 
 ## Documentation
 
