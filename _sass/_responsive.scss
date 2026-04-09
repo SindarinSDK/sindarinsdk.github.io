@@ -1,7 +1,18 @@
-@media (max-width: $mobile-breakpoint) {
+@media (max-width: 1024px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: transform $transition;
+    backdrop-filter: blur(20px);
 
     &.open {
       transform: translateX(0);
@@ -14,19 +25,22 @@
 
   .content-area {
     margin-left: 0;
-    padding: 30px 20px;
+    padding: 32px 24px;
   }
 
   .hero {
-    padding: 40px 0 60px;
+    padding: 60px 0 80px;
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
+  }
 
-    img {
-      width: 120px;
-      height: 120px;
+  .hero-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
     }
   }
 
@@ -40,29 +54,40 @@
 
   .page-navigation {
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
 
     .page-nav-prev,
     .page-nav-next {
       max-width: 100%;
     }
   }
+
+  .site-footer {
+    margin-left: 0;
+    padding: 24px;
+
+    .footer-content {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
 }
 
 @media (max-width: 480px) {
   .content-area {
-    padding: 20px 15px;
+    padding: 24px 16px;
   }
 
   h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.3rem; }
+  h2 { font-size: 1.25rem; }
 
   pre {
-    padding: 15px;
+    padding: 16px;
     font-size: 0.8rem;
   }
 
-  .features {
-    grid-template-columns: 1fr;
+  .hero h1 {
+    font-size: 1.75rem;
   }
 }

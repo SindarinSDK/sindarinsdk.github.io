@@ -1,7 +1,7 @@
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <a href="{{ '/' | relative_url }}" class="logo">
-      <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Sindarin Logo">
+      <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Sindarin" class="logo-icon">
       <span class="logo-title">Sindarin</span>
     </a>
   </div>
@@ -12,6 +12,11 @@
       <div class="nav-section-title">{{ section.title }}</div>
       <ul class="nav-list">
         {% for item in section.items %}
+        {% if item.external %}
+        <li class="nav-item">
+          <a href="{{ item.url }}" class="nav-link" target="_blank" rel="noopener">{{ item.title }} <i class="fas fa-external-link-alt" style="font-size: 0.7rem; opacity: 0.5;"></i></a>
+        </li>
+        {% else %}
         <li class="nav-item {% if page.url == item.url %}active{% endif %}">
           <a href="{{ item.url | relative_url }}" class="nav-link">{{ item.title }}</a>
           {% if item.subitems %}
@@ -24,6 +29,7 @@
           </ul>
           {% endif %}
         </li>
+        {% endif %}
         {% endfor %}
       </ul>
     </div>
@@ -31,7 +37,9 @@
   </div>
 
   <div class="sidebar-footer">
-    <a href="https://github.com/SindarinSDK/sindarin-compiler" class="github-link">GitHub</a>
+    <a href="https://github.com/SindarinSDK/sindarin-compiler" class="github-link" target="_blank" rel="noopener">
+      <i class="fab fa-github"></i> GitHub
+    </a>
   </div>
 </nav>
 

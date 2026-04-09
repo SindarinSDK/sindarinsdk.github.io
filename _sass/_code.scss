@@ -1,37 +1,37 @@
 // Inline code
 code {
-  background: $bg-code;
-  color: $gold-light;
+  background: $color-surface-2;
+  color: $color-accent-hover;
   padding: 2px 6px;
   border-radius: 4px;
   font-family: $font-mono;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 // Code blocks
 pre {
-  background: $bg-code;
-  border: 1px solid $border-color;
-  border-radius: 8px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
   padding: 20px;
   overflow-x: auto;
-  margin: 15px 0 20px;
+  margin: 16px 0 20px;
 
   code {
     background: none;
     padding: 0;
-    color: $text-primary;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    color: $color-text;
+    font-size: 0.875rem;
+    line-height: 1.6;
   }
 }
 
 // Rouge syntax highlighting
 .highlight {
-  background: $bg-code;
-  border: 1px solid $border-color;
-  border-radius: 8px;
-  margin: 15px 0 20px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  margin: 16px 0 20px;
 
   pre {
     margin: 0;
@@ -53,7 +53,7 @@ pre {
   // Operators
   .o, .ow { color: #89ddff; }
   // Punctuation
-  .p { color: $text-secondary; }
+  .p { color: $color-text-muted; }
   // Names
   .na { color: #9cdcfe; }
   .nn { color: #4ec9b0; }

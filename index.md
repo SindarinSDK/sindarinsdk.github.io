@@ -5,12 +5,19 @@ permalink: /
 ---
 
 <div class="hero">
-  <img src="{{ '/assets/images/logo.svg' | relative_url }}" alt="Sindarin Logo">
-  <h1>Sindarin</h1>
-  <p>A statically-typed procedural programming language that compiles to C. Clean arrow-based syntax, powerful string interpolation, and built-in array operations.</p>
-  <div class="hero-buttons">
-    <a href="/language/quick-start/" class="btn btn-primary">Get Started</a>
-    <a href="https://github.com/SindarinSDK/sindarin-compiler" class="btn btn-secondary">View on GitHub</a>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-label">Compile &middot; Type-Safe &middot; Native Performance</p>
+    <h1>The Sindarin<br /><span class="accent">Programming Language</span></h1>
+    <p class="hero-sub">
+      A statically-typed procedural language that compiles to C.
+      Clean arrow-based syntax, powerful string interpolation, and native performance
+      with zero runtime overhead.
+    </p>
+    <div class="hero-actions">
+      <a href="/docs/packages/" class="btn btn-primary">Get Started</a>
+      <a href="https://github.com/SindarinSDK/sindarin-compiler" class="btn btn-ghost" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
   </div>
 </div>
 
@@ -28,8 +35,6 @@ curl -sSf https://raw.githubusercontent.com/SindarinSDK/sindarin-compiler/main/s
 irm https://raw.githubusercontent.com/SindarinSDK/sindarin-compiler/main/scripts/install.ps1 | iex
 ```
 
-For manual installation or building from source, see the [Building Guide](/language/building/).
-
 </div>
 
 <div class="section" markdown="1">
@@ -43,18 +48,18 @@ For manual installation or building from source, see the [Building Guide](/langu
   <span class="pipeline-arrow">&rarr;</span>
   <div class="pipeline-step">C code</div>
   <span class="pipeline-arrow">&rarr;</span>
-  <div class="pipeline-step">GCC</div>
+  <div class="pipeline-step">GCC / Clang</div>
   <span class="pipeline-arrow">&rarr;</span>
-  <div class="pipeline-step">executable</div>
+  <div class="pipeline-step">Native Binary</div>
 </div>
 
 ```sindarin
 fn greet(name: str): str => $"Hello, {name}!"
 
 fn main(): void =>
-  var names: str[] = {"Alice", "Bob", "Charlie"}
-  for name in names =>
-    print($"{greet(name)}\n")
+    var names: str[] = {"Alice", "Bob", "Charlie"}
+    for name in names =>
+        println(greet(name))
 ```
 
 </div>
@@ -65,28 +70,34 @@ fn main(): void =>
 
 <div class="features">
   <div class="feature-card">
-    <h4>Explicit Types</h4>
-    <p>All types are annotated. No inference means code is always clear about what types are being used.</p>
+    <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+    <h4>Static Types</h4>
+    <p>Every variable is explicitly typed. No inference ambiguity &mdash; code is always clear about what types are in play.</p>
   </div>
   <div class="feature-card">
-    <h4>Clean Syntax</h4>
-    <p>Arrow-based blocks provide consistent, readable structure. No curly braces for blocks.</p>
+    <div class="feature-icon"><i class="fas fa-arrow-right"></i></div>
+    <h4>Arrow Syntax</h4>
+    <p>Clean, consistent arrow-based blocks. No curly braces &mdash; just indentation and arrows.</p>
   </div>
   <div class="feature-card">
-    <h4>Arena Memory</h4>
-    <p>Simple arena-based memory management. No manual malloc/free, no garbage collector pauses.</p>
+    <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+    <h4>Compiles to C</h4>
+    <p>Generates readable C code. Easy to integrate with existing C libraries, inspect output, or link native code.</p>
   </div>
   <div class="feature-card">
-    <h4>C Interop</h4>
-    <p>Compiles to readable C code. Easy to integrate with existing C libraries and tools.</p>
-  </div>
-  <div class="feature-card">
-    <h4>Batteries Included</h4>
-    <p>Built-in string methods, array operations, file I/O, networking, and more.</p>
-  </div>
-  <div class="feature-card">
+    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
     <h4>Native Performance</h4>
-    <p>Compiles to native code via C with no runtime overhead. Fast compilation, fast execution.</p>
+    <p>Zero runtime overhead. Compiles to native binaries via GCC or Clang with full optimization support.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon"><i class="fas fa-cubes"></i></div>
+    <h4>Generics & Interfaces</h4>
+    <p>Structural typing with generic structs, functions, and constraints. No runtime dispatch &mdash; all checked at compile time.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon"><i class="fas fa-diagram-project"></i></div>
+    <h4>Built-in Threading</h4>
+    <p>First-class thread spawn, join, and detach operators. Sync variables and lock blocks for safe concurrency.</p>
   </div>
 </div>
 
@@ -96,19 +107,23 @@ fn main(): void =>
 
 ## Documentation
 
-<div class="features">
-  <div class="feature-card">
-    <h4><a href="/language/overview/">Language Guide</a></h4>
-    <p>Learn the syntax, data types, control flow, functions, and advanced features.</p>
-  </div>
-  <div class="feature-card">
-    <h4><a href="/sdk/overview/">SDK Reference</a></h4>
-    <p>Built-in modules for I/O, networking, crypto, encoding, date/time, and more.</p>
-  </div>
-  <div class="feature-card">
-    <h4><a href="/language/building/">Building</a></h4>
-    <p>Build instructions for Linux, macOS, and Windows with Make or CMake.</p>
-  </div>
+<div class="doc-links">
+  <a href="/docs/program-structure/" class="doc-link-card">
+    <h4>Language Guide</h4>
+    <p>Learn the syntax, types, control flow, functions, structs, and more.</p>
+  </a>
+  <a href="/docs/packages/" class="doc-link-card">
+    <h4>Packages & Tooling</h4>
+    <p>Project setup, package management, CLI commands, and built-in functions.</p>
+  </a>
+  <a href="/docs/native-interop/" class="doc-link-card">
+    <h4>Native C Interop</h4>
+    <p>Bind C functions and structs, type mapping, and the .sn.c convention.</p>
+  </a>
+  <a href="/docs/common-errors/" class="doc-link-card">
+    <h4>Error Reference</h4>
+    <p>Quick reference for common compile errors and how to fix them.</p>
+  </a>
 </div>
 
 </div>

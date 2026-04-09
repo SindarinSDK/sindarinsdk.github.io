@@ -1,21 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
   <defs>
-    <!-- Gradient for the main symbol -->
-    <linearGradient id="elvishGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#2E7D5A;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#1B5E40;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0D3B2A;stop-opacity:1" />
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#818cf8;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Gradient for accent elements -->
-    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#C9A227;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#E8D48B;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#C9A227;stop-opacity:1" />
+
+    <linearGradient id="cubeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Subtle glow filter -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+
+    <linearGradient id="cubeLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="cubeRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
@@ -23,79 +36,78 @@
       </feMerge>
     </filter>
   </defs>
-  
-  <!-- Background circle -->
-  <circle cx="200" cy="180" r="140" fill="url(#elvishGradient)" />
-  
-  <!-- Inner decorative ring -->
-  <circle cx="200" cy="180" r="120" fill="none" stroke="url(#goldAccent)" stroke-width="1.5" opacity="0.6"/>
-  
-  <!-- Elvish-inspired S symbol made of flowing curves -->
-  <g filter="url(#glow)">
-    <!-- Main S curve - elegant flowing design -->
-    <path d="M 160 100 
-             C 220 90, 260 110, 260 145
-             C 260 175, 220 185, 200 185
-             C 180 185, 140 195, 140 225
-             C 140 260, 180 270, 240 260" 
-          fill="none" 
-          stroke="url(#goldAccent)" 
-          stroke-width="8" 
-          stroke-linecap="round"/>
-    
-    <!-- Decorative flourish - top -->
-    <path d="M 155 100 
-             C 145 85, 155 70, 175 75" 
-          fill="none" 
-          stroke="url(#goldAccent)" 
-          stroke-width="4" 
-          stroke-linecap="round"/>
-    
-    <!-- Decorative flourish - bottom -->
-    <path d="M 245 260 
-             C 255 275, 245 290, 225 285" 
-          fill="none" 
-          stroke="url(#goldAccent)" 
-          stroke-width="4" 
-          stroke-linecap="round"/>
-    
-    <!-- Code brackets < > stylized -->
-    <path d="M 120 160 L 100 180 L 120 200" 
-          fill="none" 
-          stroke="#E8D48B" 
-          stroke-width="5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"
-          opacity="0.8"/>
-    
-    <path d="M 280 160 L 300 180 L 280 200" 
-          fill="none" 
-          stroke="#E8D48B" 
-          stroke-width="5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"
-          opacity="0.8"/>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="32" fill="#0a0a0f"/>
+
+  <!-- Subtle radial glow behind cube -->
+  <circle cx="200" cy="170" r="120" fill="rgba(59,130,246,0.06)"/>
+  <circle cx="200" cy="170" r="80" fill="rgba(99,102,241,0.04)"/>
+
+  <!-- Isometric cube -->
+  <g filter="url(#glow)" transform="translate(200,155)">
+    <!-- Top face -->
+    <polygon points="0,-72 80,-28 0,16 -80,-28" fill="url(#cubeTop)"/>
+    <!-- Left face -->
+    <polygon points="-80,-28 0,16 0,100 -80,56" fill="url(#cubeLeft)"/>
+    <!-- Right face -->
+    <polygon points="80,-28 0,16 0,100 80,56" fill="url(#cubeRight)"/>
+
+    <!-- Edge highlights -->
+    <line x1="0" y1="-72" x2="-80" y2="-28" stroke="#93c5fd" stroke-width="1" opacity="0.4"/>
+    <line x1="0" y1="-72" x2="80" y2="-28" stroke="#93c5fd" stroke-width="1" opacity="0.3"/>
+    <line x1="0" y1="16" x2="0" y2="100" stroke="#1e3a5f" stroke-width="1" opacity="0.5"/>
   </g>
-  
-  <!-- Small decorative stars/dots -->
-  <circle cx="145" cy="130" r="3" fill="#E8D48B" opacity="0.7"/>
-  <circle cx="255" cy="230" r="3" fill="#E8D48B" opacity="0.7"/>
-  <circle cx="200" cy="85" r="2" fill="#E8D48B" opacity="0.5"/>
-  <circle cx="200" cy="275" r="2" fill="#E8D48B" opacity="0.5"/>
-  
+
+  <!-- S letterform on the cube front faces -->
+  <g filter="url(#subtleGlow)" transform="translate(200,155)">
+    <!-- S curve flowing across the cube faces -->
+    <path d="M -28,10
+             C -10,2 15,0 25,10
+             C 35,20 10,32 -5,36
+             C -20,40 -35,48 -25,60
+             C -15,72 10,68 28,58"
+          fill="none"
+          stroke="#e4e4e7"
+          stroke-width="6"
+          stroke-linecap="round"
+          opacity="0.95"/>
+  </g>
+
+  <!-- Code brackets flanking the cube -->
+  <g opacity="0.5">
+    <path d="M 85 140 L 65 170 L 85 200"
+          fill="none"
+          stroke="#60a5fa"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+    <path d="M 315 140 L 335 170 L 315 200"
+          fill="none"
+          stroke="#60a5fa"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+
+  <!-- Small accent dots -->
+  <circle cx="108" cy="125" r="2.5" fill="#60a5fa" opacity="0.5"/>
+  <circle cx="292" cy="215" r="2.5" fill="#818cf8" opacity="0.5"/>
+  <circle cx="200" cy="68" r="2" fill="#60a5fa" opacity="0.35"/>
+
   <!-- Text: SINDARIN -->
-  <text x="200" y="355" 
-        font-family="Georgia, 'Times New Roman', serif" 
-        font-size="36" 
+  <text x="200" y="340"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="34"
         font-weight="800"
         letter-spacing="8"
-        fill="#1B5E40" 
+        fill="url(#accentGrad)"
         text-anchor="middle">SINDARIN</text>
-  
-  <!-- Subtle underline decoration -->
-  <path d="M 95 368 Q 200 358, 305 368" 
-        fill="none" 
-        stroke="url(#goldAccent)" 
-        stroke-width="3.5"
-        opacity="0.6"/>
+
+  <!-- Subtle underline -->
+  <line x1="110" y1="355" x2="290" y2="355"
+        stroke="url(#accentGrad)"
+        stroke-width="2"
+        opacity="0.3"
+        stroke-linecap="round"/>
 </svg>

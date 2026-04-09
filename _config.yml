@@ -19,22 +19,13 @@ permalink: pretty
 
 defaults:
   - scope:
-      path: "language"
-      type: "pages"
+      path: "docs"
     values:
       layout: page
-      section: language
-      render_with_liquid: false
-  - scope:
-      path: "sdk"
-      type: "pages"
-    values:
-      layout: page
-      section: sdk
+      section: docs
       render_with_liquid: false
   - scope:
       path: ""
-      type: "pages"
     values:
       layout: default
 

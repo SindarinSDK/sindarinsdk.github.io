@@ -4,8 +4,8 @@
   left: 0;
   width: $sidebar-width;
   height: 100vh;
-  background: $bg-card;
-  border-right: 1px solid $border-color;
+  background: $color-surface;
+  border-right: 1px solid $color-border;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -14,34 +14,37 @@
 
 .sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid $color-border;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
+  transition: color $transition;
 
   &:hover {
     text-decoration: none;
+    color: $color-accent-hover;
   }
 
-  img {
-    width: 40px;
-    height: 40px;
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
   }
 
   .logo-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: $text-primary;
+    color: $color-text;
   }
 }
 
 .sidebar-content {
   flex: 1;
-  padding: 10px 0;
+  padding: 12px 0;
   overflow-y: auto;
 }
 
@@ -51,10 +54,11 @@
 
 .nav-section-title {
   font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: $text-secondary;
-  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+  color: $color-text-dim;
+  margin-bottom: 8px;
   padding-left: 20px;
 }
 
@@ -65,25 +69,31 @@
 }
 
 .nav-item {
+  margin-bottom: 0;
+
   &.active > .nav-link {
-    background: $primary-green-dark;
-    color: $gold;
+    background: $color-accent-subtle;
+    color: $color-accent;
+    border-color: rgba(59, 130, 246, 0.2);
   }
 }
 
 .nav-link {
   display: block;
   padding: 8px 20px;
-  color: $text-primary;
-  font-size: 0.9rem;
+  color: $color-text-muted;
+  font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
   border-radius: 6px;
-  margin: 0 8px;
-  transition: all 0.2s;
+  margin: 1px 8px;
+  transition: all $transition;
+  border: 1px solid transparent;
+  letter-spacing: 0.01em;
 
   &:hover {
-    background: $primary-green-dark;
-    color: $gold-light;
+    background: $color-accent-subtle;
+    color: $color-text;
     text-decoration: none;
   }
 }
@@ -100,35 +110,48 @@
 }
 
 .nav-subitem {
+  margin-bottom: 0;
+
   &.active > .nav-sublink {
-    color: $gold;
+    color: $color-accent;
   }
 }
 
 .nav-sublink {
   display: block;
   padding: 5px 20px 5px 36px;
-  color: $text-secondary;
-  font-size: 0.85rem;
+  color: $color-text-dim;
+  font-size: 0.8125rem;
+  font-weight: 500;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all $transition;
 
   &:hover {
-    color: $gold-light;
+    color: $color-text;
     text-decoration: none;
   }
 }
 
 .sidebar-footer {
-  padding: 15px 20px;
-  border-top: 1px solid $border-color;
+  padding: 16px 20px;
+  border-top: 1px solid $color-border;
 
   .github-link {
-    color: $text-secondary;
-    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: $color-text-dim;
+    font-size: 0.8125rem;
+    font-weight: 500;
     text-decoration: none;
+    transition: color $transition;
+
     &:hover {
-      color: $gold;
+      color: $color-accent;
+    }
+
+    i {
+      font-size: 1rem;
     }
   }
 }
@@ -136,31 +159,33 @@
 .sidebar-toggle {
   display: none;
   position: fixed;
-  top: 15px;
-  right: 15px;
+  top: 16px;
+  right: 16px;
   z-index: 200;
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: 6px;
-  padding: 8px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  padding: 10px;
   cursor: pointer;
+  backdrop-filter: blur(20px);
 
   span {
     display: block;
-    width: 20px;
+    width: 22px;
     height: 2px;
-    background: $text-primary;
+    background: $color-text;
+    border-radius: 2px;
     margin: 4px 0;
-    transition: all 0.3s;
+    transition: all $transition;
   }
 
   &.active span:nth-child(1) {
-    transform: rotate(45deg) translate(4px, 4px);
+    transform: rotate(45deg) translate(4px, 5px);
   }
   &.active span:nth-child(2) {
     opacity: 0;
   }
   &.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(4px, -4px);
+    transform: rotate(-45deg) translate(4px, -5px);
   }
 }

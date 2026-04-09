@@ -1,3 +1,13 @@
+<footer class="site-footer">
+  <div class="footer-content">
+    <p>&copy; {{ 'now' | date: '%Y' }} Sindarin Programming Language</p>
+    <div class="footer-links">
+      <a href="https://github.com/SindarinSDK" target="_blank" rel="noopener">GitHub</a>
+      <a href="/docs/packages/">Docs</a>
+    </div>
+  </div>
+</footer>
+
 <script>
 // Sidebar toggle for mobile
 document.getElementById('sidebar-toggle').addEventListener('click', function() {
@@ -5,7 +15,7 @@ document.getElementById('sidebar-toggle').addEventListener('click', function() {
   this.classList.toggle('active');
 });
 
-// Close sidebar when clicking a link on mobile
+// Close sidebar on link click (mobile)
 document.querySelectorAll('.nav-link, .nav-sublink').forEach(function(link) {
   link.addEventListener('click', function() {
     if (window.innerWidth <= 768) {
@@ -15,11 +25,19 @@ document.querySelectorAll('.nav-link, .nav-sublink').forEach(function(link) {
   });
 });
 
+// Close sidebar on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-toggle').classList.remove('active');
+  }
+});
+
 // Sindarin syntax highlighting
 (function() {
-  var kwSet = {fn:1,var:1,if:1,else:1,while:1,for:1,in:1,return:1,import:1,native:1,struct:1,match:1,private:1,shared:1,print:1,println:1,true:1,false:1,as:1,ref:1,val:1,sync:1,lock:1,spawn:1,use:1,packed:1,break:1,continue:1,each:1,sizeof:1,new:1,from:1,to:1,step:1,type:1,opaque:1,enum:1};
-  var typeSet = {int:1,str:1,double:1,bool:1,byte:1,char:1,long:1,float:1,uint:1,int32:1,uint32:1,void:1};
-  var builtinSet = {TextFile:1,BinaryFile:1,Path:1,Directory:1,Bytes:1,Date:1,Time:1,Process:1,Environment:1,Random:1,UUID:1,TcpStream:1,TcpListener:1,UdpSocket:1,Crypto:1,JSON:1,XML:1,YAML:1,ZLib:1,Stdio:1,Math:1};
+  var kwSet = {fn:1,var:1,if:1,else:1,while:1,for:1,in:1,return:1,import:1,native:1,struct:1,match:1,private:1,shared:1,print:1,println:1,true:1,false:1,as:1,ref:1,val:1,sync:1,lock:1,spawn:1,use:1,packed:1,break:1,continue:1,each:1,sizeof:1,new:1,from:1,to:1,step:1,type:1,opaque:1,enum:1,static:1,using:1,interface:1,operator:1,assert:1,len:1,copyOf:1,addressOf:1,valueOf:1,typeOf:1,sizeOf:1,nil:1};
+  var typeSet = {int:1,str:1,double:1,bool:1,byte:1,char:1,long:1,float:1,uint:1,int32:1,uint32:1,void:1,Self:1};
+  var builtinSet = {TextFile:1,BinaryFile:1,Path:1,Directory:1,Bytes:1,Date:1,Time:1,Process:1,Environment:1,Random:1,UUID:1,TcpStream:1,TcpListener:1,UdpSocket:1,Crypto:1,JSON:1,XML:1,YAML:1,ZLib:1,Stdio:1,Math:1,Encoder:1,Decoder:1};
   var TOKEN = /\b([a-zA-Z_]\w*(?:\[\])?)\b|\b(\d+\.?\d*)\b|(=&gt;)/g;
 
   function esc(s) {
@@ -48,12 +66,10 @@ document.querySelectorAll('.nav-link, .nav-sublink').forEach(function(link) {
     var result = [];
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i];
-      // Pragma/comment lines starting with #
       if (/^\s*#/.test(line)) {
         result.push('<span class="sn-keyword">' + esc(line) + '<\/span>');
         continue;
       }
-      // Split line at // comment (not inside a string)
       var inStr = false, commentIdx = -1;
       for (var j = 0; j < line.length; j++) {
         if (line[j] === '"' && (j === 0 || line[j-1] !== '\\')) inStr = !inStr;
@@ -61,7 +77,6 @@ document.querySelectorAll('.nav-link, .nav-sublink').forEach(function(link) {
       }
       var code = commentIdx >= 0 ? line.slice(0, commentIdx) : line;
       var comment = commentIdx >= 0 ? line.slice(commentIdx) : '';
-      // Split code at string literals and highlight non-string parts
       var parts = code.split(/(\$?"[^"]*")/g);
       var highlighted = '';
       for (var k = 0; k < parts.length; k++) {
